@@ -13,7 +13,7 @@ export function buildWhatsAppMessage(
   storeName = "La Llave Ferretería",
 ) {
   const lines = [
-    `Hola ${storeName}, quiero cotizar los siguientes productos:`,
+    `Hola ${storeName}, quiero pedir los siguientes productos:`,
     "",
     ...items.map(
       (i) =>

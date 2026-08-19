@@ -53,7 +53,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
         {[
           [STOCK_COUNT, "Productos en stock"],
           ["48 hrs", "Entrega garantizada"],
-          ["Pro", "Precios para obra"],
+          ["100%", "Calidad garantizada"],
         ].map(([val, label]) => (
           <div
             key={label}

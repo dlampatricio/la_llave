@@ -96,8 +96,7 @@ export default async function ProductDetailPage({
               }}
             />
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-              Al enviar la cotización recibirás confirmación de disponibilidad, precios vigentes e
-              IVA por WhatsApp.
+              Al enviar tu pedido te confirmamos la disponibilidad y el precio final por WhatsApp.
             </p>
           </div>
         </div>
@@ -110,7 +109,7 @@ export default async function ProductDetailPage({
             href={`/productos?categoria=${product.category.slug}`}
             linkLabel="Ver categoría"
           />
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={toProductCardData(p)} />
             ))}

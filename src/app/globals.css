@@ -95,6 +95,36 @@
   scrollbar-color: var(--secondary) var(--background);
 }
 
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-menu-in {
+  animation: menu-in 150ms ease-out;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-toast-in {
+  animation: toast-in 150ms ease-out;
+}
+
 *::-webkit-scrollbar {
   width: 10px;
   height: 10px;

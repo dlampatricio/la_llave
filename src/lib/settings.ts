@@ -22,16 +22,16 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   heroTitleHighlight: 'para el',
   heroTitleLine2: 'Trabajo Serio',
   heroSubtitle:
-    'Herramientas profesionales, materiales y equipo de seguridad — todo lo que tu obra necesita, en stock hoy.',
+    'Herramientas, materiales y equipo de seguridad para tus proyectos — todo en stock hoy, listo para llevarse.',
   heroCtaPrimary: 'Ver ofertas',
   heroCtaSecondary: 'Ver catálogo',
   heroImage: '/hero-image.avif',
-  promoTitle: 'Cuenta Profesional',
+  promoTitle: 'Pedidos por mayoreo',
   promoSubtitle:
-    'Contratistas ahorran 12% en cada pedido. Facturación a 30 días y asesor dedicado.',
-  promoCta: 'Cotizar por WhatsApp',
+    'Ahorra comprando en cantidad. Te ayudamos a armar tu pedido con los mejores precios y entrega a domicilio.',
+  promoCta: 'Hacer pedido por WhatsApp',
   footerDescription:
-    'Sirviendo a contratistas, maestros albañiles y aficionados serios desde 1978. Herramientas de calidad, precios justos.',
+    'Te ayudamos a encontrar la herramienta correcta para cada trabajo. Calidad, buen precio y atención cercana.',
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '',
 };
 

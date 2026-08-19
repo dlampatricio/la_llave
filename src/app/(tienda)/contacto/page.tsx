@@ -7,10 +7,13 @@ import { ContactForm } from "@/components/contact-form";
 
 export const metadata: Metadata = {
   title: "Contacto",
-  description: "Contáctanos para cotizaciones, dudas y cuenta profesional.",
+  description: "Contáctanos para pedidos, dudas y precios.",
+  alternates: {
+    canonical: "/contacto",
+  },
 };
 
-const DEMO_NUMBER = "525500000000";
+const DEMO_NUMBER = "5363834798";
 
 const HOURS = [
   { days: "Lunes – Viernes", hours: "7:30 am – 6:30 pm" },
@@ -29,8 +32,8 @@ export default async function ContactoPage() {
           Contacto
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          Cotizaciones, dudas sobre productos o cuenta profesional: escríbenos por WhatsApp o
-          visítanos en tienda. Te atendemos en el horario de la ferretería.
+          Pedidos, dudas sobre productos o precios: escríbenos por WhatsApp o visítanos en tienda.
+          Te atendemos en el horario de la ferretería.
         </p>
       </div>
 
@@ -60,12 +63,12 @@ export default async function ContactoPage() {
                 WhatsApp
               </div>
               <Link
-                href={whatsappLink(`Hola ${settings.storeName}, quiero hacer una cotización.`)}
+                href={whatsappLink(`Hola ${settings.storeName}, quiero hacer un pedido.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:underline"
               >
-                {wa.replace(/^52/, "")} <ArrowUpRight className="h-3.5 w-3.5" />
+                {`+${wa.slice(0, 2)} ${wa.slice(2)}`} <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
               <div className="text-sm text-muted-foreground">Respuesta en menos de 30 min</div>
             </div>

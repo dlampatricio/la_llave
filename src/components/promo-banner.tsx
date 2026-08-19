@@ -3,7 +3,7 @@ import type { SiteSettings } from "@/lib/settings";
 import { whatsappLink } from "@/lib/quote";
 
 export function PromoBanner({ settings }: { settings: SiteSettings }) {
-  const message = `Hola ${settings.storeName}, me interesa la cuenta profesional. ¿Me pueden dar más información?`;
+  const message = `Hola ${settings.storeName}, me interesa hacer un pedido por mayoreo. ¿Me pueden dar más información?`;
   const href = whatsappLink(message);
 
   return (

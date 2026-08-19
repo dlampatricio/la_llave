@@ -62,7 +62,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         {badgeLabel && <Badge tone={badgeTone} className="absolute left-0 top-0">{badgeLabel}</Badge>}
       </Link>
 
-      <div className="flex flex-1 flex-col gap-2.5 p-4">
+      <div className="flex flex-1 flex-col gap-2.5 p-3 sm:p-4">
         <div>
           {product.sku && (
             <div className="mb-1 text-[10px] uppercase tracking-widest text-muted-foreground">
@@ -101,7 +101,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             })
           }
         >
-          Añadir a cotización
+          Añadir al pedido
         </Button>
       </div>
     </div>

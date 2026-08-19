@@ -49,7 +49,7 @@ export function ContactForm({ number, storeName }: { number: string; storeName: 
           id="contact-message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Cuéntanos qué necesitas: productos, cotización de obra, cuenta profesional…"
+          placeholder="Cuéntanos qué necesitas: productos, medidas, cantidades, presupuesto…"
           required
         />
       </div>

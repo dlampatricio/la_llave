@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { QuoteItem } from "@/lib/quote";
+import { useToast } from "@/components/toast-provider";
 
 type QuoteContextValue = {
   items: QuoteItem[];
@@ -23,6 +24,7 @@ const STORAGE_KEY = "la-llave-quote";
 export function QuoteProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<QuoteItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     try {
@@ -48,11 +50,13 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, item];
     });
-    setIsOpen(true);
+    toast(`${item.name} añadido al pedido`, "add");
   }
 
   function removeItem(id: string) {
+    const item = items.find((i) => i.id === id);
     setItems((prev) => prev.filter((i) => i.id !== id));
+    if (item) toast(`${item.name} eliminado del pedido`, "remove");
   }
 
   function setQty(id: string, qty: number) {

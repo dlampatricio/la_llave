@@ -12,10 +12,10 @@ const COLUMNS = [
     links: PRODUCT_LINKS,
   },
   {
-    heading: 'Servicios',
+    heading: 'Ayuda',
     links: [
-      { label: 'Cotizaciones', href: '/contacto' },
-      { label: 'Cuenta Profesional', href: '/contacto' },
+      { label: 'Cómo hacer un pedido', href: '/contacto' },
+      { label: 'Pedidos por mayoreo', href: '/contacto' },
       { label: 'Ofertas de la semana', href: '/productos?ofertas=1' },
       { label: 'Nuevos productos', href: '/productos' },
     ],

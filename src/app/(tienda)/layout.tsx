@@ -2,7 +2,6 @@ import { getSettings } from "@/lib/settings";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { QuoteDrawer } from "@/components/quote-drawer";
-import { WhatsAppFloat } from "@/components/whatsapp-float";
 
 export default async function StorefrontLayout({
   children,
@@ -17,7 +16,6 @@ export default async function StorefrontLayout({
       <main className="flex-1">{children}</main>
       <Footer settings={settings} />
       <QuoteDrawer />
-      <WhatsAppFloat number={settings.whatsappNumber} />
     </div>
   );
 }

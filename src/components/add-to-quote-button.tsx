@@ -17,7 +17,7 @@ export function AddToQuoteButton({
       className="w-full"
       onClick={() => addItem({ ...product, qty: 1 })}
     >
-      <ShoppingCart className="h-4 w-4" /> Añadir a cotización
+      <ShoppingCart className="h-4 w-4" /> Añadir al pedido
     </Button>
   );
 }
