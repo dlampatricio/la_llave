@@ -6,7 +6,6 @@ import { Star } from "lucide-react";
 import { useQuote } from "@/components/quote-provider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/card";
-import type { LightboxPhoto } from "@/components/photo-lightbox";
 import { cn, formatPrice, getDiscountPct } from "@/lib/utils";
 import type { ProductCardData } from "@/lib/types";
 
@@ -30,13 +29,7 @@ function StarRating({ rating }: { rating: number | null }) {
   );
 }
 
-export function ProductCard({
-  product,
-  onImageClick,
-}: {
-  product: ProductCardData;
-  onImageClick?: (photo: LightboxPhoto) => void;
-}) {
+export function ProductCard({ product }: { product: ProductCardData }) {
   const { addItem } = useQuote();
   const discount = getDiscountPct(product.price, product.wasPrice);
 
@@ -52,17 +45,7 @@ export function ProductCard({
 
   return (
     <div className="group flex flex-col border bg-card shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover">
-      <Link
-        href={`/productos/${product.slug}`}
-        onClick={(e) => {
-          if (onImageClick && product.image) {
-            e.preventDefault();
-            onImageClick({ src: product.image, alt: product.name });
-          }
-        }}
-        className={cn("relative block overflow-hidden", onImageClick && "cursor-zoom-in")}
-        style={{ aspectRatio: "1/1" }}
-      >
+      <Link href={`/productos/${product.slug}`} className="relative block overflow-hidden" style={{ aspectRatio: "1/1" }}>
         {product.image ? (
           <Image
             src={product.image}

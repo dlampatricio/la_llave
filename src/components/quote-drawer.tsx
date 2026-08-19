@@ -51,22 +51,22 @@ export function QuoteDrawer() {
           <>
             <ul className="flex-1 divide-y overflow-y-auto px-5">
               {items.map((item) => (
-                <li key={item.id} className="flex gap-3 py-4">
-                  <div className="relative h-16 w-16 shrink-0 bg-muted">
+                <li key={item.id} className="flex gap-4 py-4">
+                  <div className="relative w-20 shrink-0 self-stretch overflow-hidden border bg-muted">
                     {item.image && (
-                      <Image src={item.image} alt={item.name} fill className="object-cover" sizes="64px" />
+                      <Image src={item.image} alt={item.name} fill className="object-cover" sizes="80px" />
                     )}
                   </div>
-                  <div className="flex flex-1 flex-col">
-                    <span className="text-sm font-semibold leading-snug">{item.name}</span>
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <span className="line-clamp-2 text-sm font-semibold leading-snug">{item.name}</span>
                     <span className="mt-0.5 text-xs text-muted-foreground">
                       {formatPrice(item.price)} c/u
                     </span>
-                    <div className="mt-2 flex items-center justify-between">
+                    <div className="mt-auto flex items-center justify-between gap-3 pt-2">
                       <div className="flex items-center border">
                         <button
                           onClick={() => setQty(item.id, item.qty - 1)}
-                          className="p-1.5 hover:bg-muted"
+                          className="flex h-7 w-7 items-center justify-center transition-colors hover:bg-muted"
                           aria-label="Disminuir cantidad"
                         >
                           <Minus className="h-3 w-3" />
@@ -74,7 +74,7 @@ export function QuoteDrawer() {
                         <span className="w-8 text-center text-sm font-semibold">{item.qty}</span>
                         <button
                           onClick={() => setQty(item.id, item.qty + 1)}
-                          className="p-1.5 hover:bg-muted"
+                          className="flex h-7 w-7 items-center justify-center transition-colors hover:bg-muted"
                           aria-label="Aumentar cantidad"
                         >
                           <Plus className="h-3 w-3" />

@@ -100,19 +100,6 @@ export default async function ProductDetailPage({
               IVA por WhatsApp.
             </p>
           </div>
-
-          <div className="mt-2 grid gap-3 border-t pt-5 sm:grid-cols-3">
-            {[
-              ["Entrega", "48 horas en zona de cobertura"],
-              ["Devoluciones", "90 días sin complicaciones"],
-              ["Pago", "Efectivo, transferencia y crédito"],
-            ].map(([title, desc]) => (
-              <div key={title} className="border bg-card p-3">
-                <div className="text-xs font-bold uppercase tracking-widest">{title}</div>
-                <div className="mt-1 text-xs text-muted-foreground">{desc}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 

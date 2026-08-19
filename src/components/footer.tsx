@@ -1,33 +1,32 @@
-import Link from "next/link";
-import type { SiteSettings } from "@/lib/settings";
+import type { SiteSettings } from '@/lib/settings';
+import Link from 'next/link';
+import { categoriesWithCounts } from '@/data/catalog';
+
+const PRODUCT_LINKS = categoriesWithCounts()
+  .filter((c) => c._count.products > 0)
+  .map((c) => ({ label: c.name, href: `/productos?categoria=${c.slug}` }));
 
 const COLUMNS = [
   {
-    heading: "Productos",
+    heading: 'Productos',
+    links: PRODUCT_LINKS,
+  },
+  {
+    heading: 'Servicios',
     links: [
-      { label: "Herramientas Eléctricas", href: "/productos?categoria=herramientas-electricas" },
-      { label: "Herramientas Manuales", href: "/productos?categoria=herramientas-manuales" },
-      { label: "Tornillería", href: "/productos?categoria=tornilleria" },
-      { label: "Plomería", href: "/productos?categoria=plomeria" },
-      { label: "Electricidad", href: "/productos?categoria=electricidad" },
+      { label: 'Cotizaciones', href: '/contacto' },
+      { label: 'Cuenta Profesional', href: '/contacto' },
+      { label: 'Ofertas de la semana', href: '/productos?ofertas=1' },
+      { label: 'Nuevos productos', href: '/productos' },
     ],
   },
   {
-    heading: "Servicios",
+    heading: 'La Ferretería',
     links: [
-      { label: "Cotizaciones", href: "/contacto" },
-      { label: "Cuenta Profesional", href: "/contacto" },
-      { label: "Ofertas de la semana", href: "/productos?ofertas=1" },
-      { label: "Nuevos productos", href: "/productos" },
-    ],
-  },
-  {
-    heading: "La Ferretería",
-    links: [
-      { label: "Sobre La Llave", href: "/contacto" },
-      { label: "Contáctanos", href: "/contacto" },
-      { label: "Aviso de privacidad", href: "/contacto" },
-      { label: "Términos de venta", href: "/contacto" },
+      { label: 'Sobre La Llave', href: '/contacto' },
+      { label: 'Contáctanos', href: '/contacto' },
+      { label: 'Aviso de privacidad', href: '/contacto' },
+      { label: 'Términos de venta', href: '/contacto' },
     ],
   },
 ];
@@ -43,7 +42,9 @@ export function Footer({ settings }: { settings: SiteSettings }) {
                 {settings.storeName}
               </span>
             </div>
-            <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">{settings.footerDescription}</p>
+            <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">
+              {settings.footerDescription}
+            </p>
           </div>
 
           {COLUMNS.map((col) => (
@@ -54,7 +55,10 @@ export function Footer({ settings }: { settings: SiteSettings }) {
               <ul className="space-y-2">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-xs text-muted-foreground transition-colors hover:text-foreground">
+                    <Link
+                      href={link.href}
+                      className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -66,11 +70,15 @@ export function Footer({ settings }: { settings: SiteSettings }) {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t pt-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {settings.storeName} Ferretería. Todos los derechos reservados.
+            © {new Date().getFullYear()} {settings.storeName} Ferretería. Todos los derechos
+            reservados.
           </p>
           <div className="flex items-center gap-4 text-xs">
-            <Link href="/admin" className="text-muted-foreground transition-colors hover:text-foreground">
-              Acceso administrador
+            <Link
+              href="https://dlampatricio.github.io"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Design and Dev by <p className="inline underline">David Lam</p>
             </Link>
           </div>
         </div>

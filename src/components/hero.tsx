@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { PRODUCTS } from "@/data/catalog";
 import type { SiteSettings } from "@/lib/settings";
+
+const STOCK_COUNT = PRODUCTS.filter((p) => p.active).length.toLocaleString("es-MX");
 
 export function Hero({ settings }: { settings: SiteSettings }) {
   return (
@@ -48,13 +51,13 @@ export function Hero({ settings }: { settings: SiteSettings }) {
 
       <div className="absolute bottom-0 right-0 hidden grid-cols-3 divide-x divide-white/10 lg:grid">
         {[
-          ["12,000+", "Productos en stock"],
+          [STOCK_COUNT, "Productos en stock"],
           ["48 hrs", "Entrega garantizada"],
           ["Pro", "Precios para obra"],
         ].map(([val, label]) => (
           <div
             key={label}
-            className="border-l border-white/10 bg-black/55 px-8 py-5 text-right backdrop-blur-sm"
+            className="bg-black/55 px-8 py-5 text-right backdrop-blur-sm"
           >
             <div className="font-display text-3xl font-black uppercase text-primary">{val}</div>
             <div className="text-xs uppercase tracking-widest text-stone-300/90">{label}</div>

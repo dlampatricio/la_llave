@@ -4,7 +4,9 @@ export type ProductWithCategory = MockProduct;
 
 export async function getHomeData() {
   return {
-    categories: categoriesWithCounts(),
+    categories: categoriesWithCounts()
+      .filter((c) => c._count.products > 0)
+      .slice(0, 8),
     featured: PRODUCTS.filter((p) => p.active && p.featured),
     onSale: PRODUCTS.filter((p) => p.active && p.onSale),
   };
