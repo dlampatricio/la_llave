@@ -3,7 +3,16 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
-import { ChevronRight, Menu, Moon, Search, ShoppingCart, Sun, X } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronRight,
+  Menu,
+  Moon,
+  Search,
+  ShoppingCart,
+  Sun,
+  X,
+} from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import { useQuote } from "@/components/quote-provider";
 import { cn } from "@/lib/utils";
@@ -93,17 +102,13 @@ export function Navbar({ storeName }: { storeName: string }) {
           </form>
         </div>
 
-        <Suspense
-          fallback={
-            <nav className="hidden shrink-0 items-center gap-6 lg:flex">
-              <NavLinks activeHrefs={[]} />
-            </nav>
-          }
-        >
-          <NavLinksWithActive className="hidden shrink-0 items-center gap-6 lg:flex" />
-        </Suspense>
+        <nav className="hidden shrink-0 items-center gap-6 lg:flex">
+          <Suspense fallback={<NavLinks activeHrefs={[]} />}>
+            <NavLinksWithActive />
+          </Suspense>
+        </nav>
 
-        <div className="flex shrink-0 items-center gap-1 -mr-4 sm:-mr-6">
+        <div className="ml-auto flex shrink-0 items-center gap-1">
           <button
             onClick={toggleTheme}
             className={cn(headerButton, "hidden lg:flex")}
@@ -141,42 +146,42 @@ export function Navbar({ storeName }: { storeName: string }) {
           ref={menuRef}
           className="animate-menu-in border-t bg-card shadow-card-hover lg:hidden"
         >
-          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-            <form onSubmit={submitSearch} className="relative mb-4">
+          <div className="mx-auto max-h-[calc(100dvh-4rem)] max-w-7xl overflow-y-auto px-4 py-4 sm:px-6">
+            <form onSubmit={submitSearch} className="relative">
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Buscar herramientas, marcas, códigos…"
-                className="w-full border bg-muted py-2.5 pl-4 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring"
+                className="w-full border bg-muted py-3 pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring"
                 aria-label="Buscar productos"
                 autoFocus
               />
               <button type="submit" aria-label="Buscar" className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground">
-                <Search className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </button>
             </form>
 
-            <Suspense
-              fallback={
-                <nav className="divide-y">
-                  <NavLinks activeHrefs={[]} mobile />
-                </nav>
-              }
-            >
+            <div className="-mx-4 mt-4 border-y sm:-mx-6">
               <nav className="divide-y">
-                <NavLinksWithActive className="flex items-center justify-between py-3.5 text-base font-bold uppercase tracking-wide transition-colors hover:text-primary" mobile />
+                <Suspense fallback={<NavLinks activeHrefs={[]} mobile />}>
+                  <NavLinksWithActive mobile />
+                </Suspense>
               </nav>
-            </Suspense>
-
-            <div className="mt-4 border-t pt-4">
-              <button
-                onClick={toggleTheme}
-                className="flex w-full items-center justify-between text-sm font-semibold uppercase tracking-wide transition-colors hover:text-primary"
-              >
-                {theme === "dark" ? "Modo claro" : "Modo oscuro"}
-                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </button>
+              <div className="border-t">
+                <button
+                  onClick={toggleTheme}
+                  className="flex w-full items-center justify-between gap-4 px-4 py-4 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-muted sm:px-6"
+                >
+                  {theme === "dark" ? "Modo claro" : "Modo oscuro"}
+                  {theme === "dark" ? (
+                    <Sun className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <Moon className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -194,37 +199,29 @@ function NavLinks({ activeHrefs, mobile = false }: { activeHrefs: string[]; mobi
           href={link.href}
           className={cn(
             mobile
-              ? "flex items-center justify-between py-3.5 text-base font-bold uppercase tracking-wide transition-colors hover:text-primary"
+              ? "group flex items-center justify-between gap-4 px-4 py-4 text-sm font-bold uppercase tracking-wide transition-colors hover:bg-muted sm:px-6"
               : "text-sm font-medium uppercase tracking-wide transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
             activeHrefs.includes(link.href) && "text-primary",
           )}
         >
           {link.label}
-          {mobile && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
+          {mobile && (
+            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          )}
         </Link>
       ))}
     </>
   );
 }
 
-function NavLinksWithActive({
-  className,
-  mobile = false,
-}: {
-  className?: string;
-  mobile?: boolean;
-}) {
+function NavLinksWithActive({ mobile = false }: { mobile?: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const activeHrefs = NAV_LINKS.filter((link) => isLinkActive(link.href, pathname, searchParams)).map(
     (link) => link.href,
   );
 
-  return (
-    <nav className={className}>
-      <NavLinks activeHrefs={activeHrefs} mobile={mobile} />
-    </nav>
-  );
+  return <NavLinks activeHrefs={activeHrefs} mobile={mobile} />;
 }
 
 function isLinkActive(href: string, pathname: string, searchParams: URLSearchParams) {
