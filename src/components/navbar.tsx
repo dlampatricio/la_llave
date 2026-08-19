@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { ChevronRight, Menu, Moon, Search, ShoppingCart, Sun, X } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import { useQuote } from "@/components/quote-provider";
@@ -93,20 +93,15 @@ export function Navbar({ storeName }: { storeName: string }) {
           </form>
         </div>
 
-        <nav className="hidden shrink-0 items-center gap-6 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-sm font-medium uppercase tracking-wide transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
-                isActive(pathname, link.href) && "text-primary",
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <Suspense
+          fallback={
+            <nav className="hidden shrink-0 items-center gap-6 lg:flex">
+              <NavLinks activeHrefs={[]} />
+            </nav>
+          }
+        >
+          <NavLinksWithActive className="hidden shrink-0 items-center gap-6 lg:flex" />
+        </Suspense>
 
         <div className="flex shrink-0 items-center gap-1 -mr-4 sm:-mr-6">
           <button
@@ -162,21 +157,17 @@ export function Navbar({ storeName }: { storeName: string }) {
               </button>
             </form>
 
-            <nav className="divide-y">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "flex items-center justify-between py-3.5 text-base font-bold uppercase tracking-wide transition-colors hover:text-primary",
-                    isActive(pathname, link.href) && "text-primary",
-                  )}
-                >
-                  {link.label}
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                </Link>
-              ))}
-            </nav>
+            <Suspense
+              fallback={
+                <nav className="divide-y">
+                  <NavLinks activeHrefs={[]} mobile />
+                </nav>
+              }
+            >
+              <nav className="divide-y">
+                <NavLinksWithActive className="flex items-center justify-between py-3.5 text-base font-bold uppercase tracking-wide transition-colors hover:text-primary" mobile />
+              </nav>
+            </Suspense>
 
             <div className="mt-4 border-t pt-4">
               <button
@@ -194,7 +185,58 @@ export function Navbar({ storeName }: { storeName: string }) {
   );
 }
 
-function isActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname.startsWith(href.split("?")[0]);
+function NavLinks({ activeHrefs, mobile = false }: { activeHrefs: string[]; mobile?: boolean }) {
+  return (
+    <>
+      {NAV_LINKS.map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={cn(
+            mobile
+              ? "flex items-center justify-between py-3.5 text-base font-bold uppercase tracking-wide transition-colors hover:text-primary"
+              : "text-sm font-medium uppercase tracking-wide transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+            activeHrefs.includes(link.href) && "text-primary",
+          )}
+        >
+          {link.label}
+          {mobile && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
+        </Link>
+      ))}
+    </>
+  );
+}
+
+function NavLinksWithActive({
+  className,
+  mobile = false,
+}: {
+  className?: string;
+  mobile?: boolean;
+}) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeHrefs = NAV_LINKS.filter((link) => isLinkActive(link.href, pathname, searchParams)).map(
+    (link) => link.href,
+  );
+
+  return (
+    <nav className={className}>
+      <NavLinks activeHrefs={activeHrefs} mobile={mobile} />
+    </nav>
+  );
+}
+
+function isLinkActive(href: string, pathname: string, searchParams: URLSearchParams) {
+  if (href === "/productos?ofertas=1") {
+    return pathname === "/productos" && searchParams.get("ofertas") === "1";
+  }
+  if (href === "/productos") {
+    return (
+      (pathname === "/productos" && searchParams.get("ofertas") !== "1") ||
+      pathname.startsWith("/productos/")
+    );
+  }
+  if (href === "/contacto") return pathname.startsWith("/contacto");
+  return pathname === href;
 }
