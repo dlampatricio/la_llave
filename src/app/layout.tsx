@@ -55,6 +55,14 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://lallaveferreteria.vercel.app"),
 };
 
+const THEME_SCRIPT = `(function () {
+  try {
+    var stored = localStorage.getItem("theme");
+    var dark = stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    if (dark) document.documentElement.classList.add("dark");
+  } catch (e) {}
+})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,6 +70,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className={`${inter.variable} ${barlow.variable} font-sans antialiased`}>
         <ThemeProvider>
           <ToastProvider>
