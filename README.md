@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# La Llave Ferretería
 
-## Getting Started
+Web app para una ferretería: catálogo público con cotizaciones por WhatsApp y panel de administración para gestionar productos, categorías, ofertas y contenido del sitio.
 
-First, run the development server:
+## Estado actual
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Frontend funcional con datos de prueba (mock).** El backend (base de datos, autenticación, subida de imágenes) se implementará después: las librerías de datos (`src/lib/products.ts`, `src/lib/settings.ts`) ya tienen las firmas finales, así que el cambio será interno.
+
+## Stack
+
+- Next.js 15 (App Router) + TypeScript
+- Tailwind CSS 4 (tokens de diseño en `globals.css`)
+- React Hook Form + Zod (formularios)
+- Lucide (iconos)
+
+## Estructura
+
+```
+src/
+  app/
+    (tienda)/          # Página pública
+      page.tsx         # Portada
+      productos/       # Catálogo + detalle
+    admin/             # Panel de administración
+      page.tsx         # Dashboard
+      productos/       # CRUD de productos
+      categorias/      # CRUD de categorías
+      configuracion/   # Contenido editable del sitio
+  components/          # UI de la tienda y del admin
+  data/catalog.ts      # Datos mock: categorías y productos
+  lib/                 # utils, tipos, quote (WhatsApp)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Datos de prueba
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/data/catalog.ts`: 7 categorías y 13 productos en USD.
+- `src/lib/settings.ts`: textos editables (anuncio, hero, banner, WhatsApp).
+- Las acciones del admin (`src/app/admin/actions.ts`) no persisten aún; solo validan el flujo de UI.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Configuración
 
-## Learn More
+`.env`:
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_WHATSAPP_NUMBER=5215512345678
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sin número, los botones de WhatsApp se ocultan (botón flotante) o quedan vacíos (cotización).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Comandos
 
-## Deploy on Vercel
+```bash
+npm run dev     # desarrollo
+npm run build   # build de producción
+npm run lint    # eslint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Pendiente (backend)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Base de datos PostgreSQL (Neon) con Prisma: modelos `User`, `Category`, `Product`, `Setting`.
+- Login de administrador (Auth.js) protegiendo `/admin`.
+- Persistencia de productos/categorías/contenido y subida de imágenes (UploadThing).
