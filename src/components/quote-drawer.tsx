@@ -3,6 +3,7 @@
 import { useQuote } from '@/components/quote-provider';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
+import { WhatsAppLink } from '@/components/whatsapp-link';
 import { buildWhatsAppMessage, whatsappLink } from '@/lib/quote';
 import { formatPrice } from '@/lib/utils';
 import { Minus, Plus, Trash2, X } from 'lucide-react';
@@ -117,11 +118,11 @@ export function QuoteDrawer() {
                 Los precios pueden variar según disponibilidad. Te confirmamos el total al responder
                 tu pedido.
               </p>
-              <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+              <WhatsAppLink href={link} className="block">
                 <Button className="w-full" size="lg">
                   Enviar pedido por WhatsApp
                 </Button>
-              </a>
+              </WhatsAppLink>
               <Button variant="ghost" size="sm" className="mt-2 w-full" onClick={clearQuote}>
                 Vaciar pedido
               </Button>

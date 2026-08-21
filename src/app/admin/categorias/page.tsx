@@ -1,9 +1,9 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { CATEGORIES, PRODUCTS } from "@/data/catalog";
 import { Card } from "@/components/ui/card";
-import { IconButton } from "@/components/ui/icon-button";
 import { createCategory, deleteCategory, updateCategory } from "@/app/admin/actions";
 import { CategoryForm } from "@/components/admin/category-form";
+import { DeleteForm } from "@/components/admin/delete-form";
 
 export default function AdminCategoriesPage() {
   return (
@@ -36,11 +36,7 @@ export default function AdminCategoriesPage() {
               initial={{ name: cat.name, imageUrl: cat.imageUrl ?? "" }}
               compact
             />
-            <form action={deleteCategory.bind(null, cat.id)}>
-              <IconButton type="submit" variant="destructive" aria-label={`Eliminar categoría ${cat.name}`}>
-                <Trash2 className="h-4 w-4" />
-              </IconButton>
-            </form>
+            <DeleteForm action={deleteCategory.bind(null, cat.id)} label={cat.name} />
           </li>
         ))}
       </ul>

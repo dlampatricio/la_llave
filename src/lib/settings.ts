@@ -13,6 +13,15 @@ export type SiteSettings = {
   promoCta: string;
   footerDescription: string;
   whatsappNumber: string;
+  contactAddressLine1: string;
+  contactAddressLine2: string;
+  contactEmail: string;
+  contactPhone: string;
+  hoursWeekdays: string;
+  hoursSaturday: string;
+  hoursSunday: string;
+  facebookUrl: string;
+  instagramUrl: string;
 };
 
 export const DEFAULT_SETTINGS: SiteSettings = {
@@ -33,6 +42,15 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   footerDescription:
     'Te ayudamos a encontrar la herramienta correcta para cada trabajo. Calidad, buen precio y atención cercana.',
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '',
+  contactAddressLine1: 'Av. del Herrerillo 1234, Col. Centro',
+  contactAddressLine2: 'Ciudad, CP 44000',
+  contactEmail: 'ventas@lallave.mx',
+  contactPhone: '+53 5638 34798',
+  hoursWeekdays: 'Lunes a Viernes · 7:30 am – 6:30 pm',
+  hoursSaturday: 'Sábado · 8:00 am – 2:00 pm',
+  hoursSunday: 'Domingo · Cerrado',
+  facebookUrl: '',
+  instagramUrl: '',
 };
 
 export async function getSettings(): Promise<SiteSettings> {

@@ -62,6 +62,33 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
         },
       ],
     },
+    {
+      title: "Datos de contacto (página Contacto)",
+      fields: [
+        { key: "contactAddressLine1", label: "Dirección — línea 1" },
+        { key: "contactAddressLine2", label: "Dirección — línea 2 (ciudad, CP)" },
+        { key: "contactEmail", label: "Correo electrónico" },
+        { key: "contactPhone", label: "Teléfono visible" },
+        { key: "hoursWeekdays", label: "Horario — lunes a viernes" },
+        { key: "hoursSaturday", label: "Horario — sábado" },
+        { key: "hoursSunday", label: "Horario — domingo" },
+      ],
+    },
+    {
+      title: "Redes sociales (pie de página)",
+      fields: [
+        {
+          key: "facebookUrl",
+          label: "URL de Facebook",
+          hint: "Déjalo vacío para ocultar el ícono.",
+        },
+        {
+          key: "instagramUrl",
+          label: "URL de Instagram",
+          hint: "Déjalo vacío para ocultar el ícono.",
+        },
+      ],
+    },
   ];
 
   return (
@@ -90,6 +117,14 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
                   />
                 )}
                 {field.hint && <p className="mt-1 text-xs text-muted-foreground">{field.hint}</p>}
+                {field.key === "heroImage" && values.heroImage && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={values.heroImage}
+                    alt="Vista previa de la imagen del hero"
+                    className="mt-2 h-24 w-40 border object-cover"
+                  />
+                )}
               </div>
             ))}
           </div>

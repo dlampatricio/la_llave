@@ -1,6 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import type { SiteSettings } from "@/lib/settings";
 import { whatsappLink } from "@/lib/quote";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 
 export function PromoBanner({ settings }: { settings: SiteSettings }) {
   const message = `Hola ${settings.storeName}, me interesa hacer un pedido por mayoreo. ¿Me pueden dar más información?`;
@@ -17,14 +18,12 @@ export function PromoBanner({ settings }: { settings: SiteSettings }) {
             {settings.promoSubtitle}
           </p>
         </div>
-        <a
+        <WhatsAppLink
           href={href}
-          target="_blank"
-          rel="noopener noreferrer"
           className="flex shrink-0 items-center gap-2 border-2 border-primary-foreground px-8 py-3 text-sm font-bold uppercase tracking-widest text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-primary"
         >
           <MessageCircle className="h-4 w-4" /> {settings.promoCta}
-        </a>
+        </WhatsAppLink>
       </div>
     </section>
   );

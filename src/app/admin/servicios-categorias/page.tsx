@@ -1,9 +1,9 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { SERVICE_CATEGORIES, SERVICES } from "@/data/services";
 import { Card } from "@/components/ui/card";
-import { IconButton } from "@/components/ui/icon-button";
 import { createServiceCategory, deleteServiceCategory, updateServiceCategory } from "@/app/admin/actions";
 import { ServiceCategoryForm } from "@/components/admin/service-category-form";
+import { DeleteForm } from "@/components/admin/delete-form";
 
 export default function AdminServiceCategoriesPage() {
   return (
@@ -38,11 +38,7 @@ export default function AdminServiceCategoriesPage() {
               initial={{ name: cat.name, imageUrl: cat.imageUrl ?? "" }}
               compact
             />
-            <form action={deleteServiceCategory.bind(null, cat.id)}>
-              <IconButton type="submit" variant="destructive" aria-label={`Eliminar categoría ${cat.name}`}>
-                <Trash2 className="h-4 w-4" />
-              </IconButton>
-            </form>
+            <DeleteForm action={deleteServiceCategory.bind(null, cat.id)} label={cat.name} />
           </li>
         ))}
       </ul>

@@ -1,22 +1,26 @@
 import Link from "next/link";
-import { PackagePlus, Pencil, Plus, Search, Trash2 } from "lucide-react";
-import { PRODUCTS } from "@/data/catalog";
+import { PackagePlus, Pencil, Plus, Search } from "lucide-react";
+import { CATEGORIES, PRODUCTS } from "@/data/catalog";
 import { formatPrice } from "@/lib/utils";
 import { Badge, Card } from "@/components/ui/card";
 import { IconButton } from "@/components/ui/icon-button";
 import { deleteProduct, toggleProduct } from "@/app/admin/actions";
 import { ToggleField } from "@/components/admin/toggle-field";
+import { DeleteForm } from "@/components/admin/delete-form";
 
 export const dynamic = "force-dynamic";
+
+const PAGE_SIZE = 10;
 
 export default async function AdminProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; oferta?: string; stock?: string }>;
+  searchParams: Promise<{ q?: string; oferta?: string; stock?: string; categoria?: string; pagina?: string }>;
 }) {
   const sp = await searchParams;
+  const page = Math.max(1, Number(sp.pagina) || 1);
 
-  const products = PRODUCTS.filter((p) => {
+  const filtered = PRODUCTS.filter((p) => {
     if (sp.q) {
       const needle = sp.q.toLowerCase();
       if (!p.name.toLowerCase().includes(needle) && !(p.sku ?? "").toLowerCase().includes(needle)) {
@@ -25,15 +29,33 @@ export default async function AdminProductsPage({
     }
     if (sp.oferta === "1" && !p.onSale) return false;
     if (sp.stock === "1" && !(p.active && p.stock <= 5)) return false;
+    if (sp.categoria && p.category.slug !== sp.categoria) return false;
     return true;
   });
+
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const products = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  function hrefForPage(p: number) {
+    const next = new URLSearchParams();
+    if (sp.q) next.set("q", sp.q);
+    if (sp.categoria) next.set("categoria", sp.categoria);
+    if (sp.oferta === "1") next.set("oferta", "1");
+    if (sp.stock === "1") next.set("stock", "1");
+    if (p > 1) next.set("pagina", String(p));
+    return `/admin/productos?${next.toString()}`;
+  }
 
   return (
     <div>
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-4xl font-black uppercase tracking-tight">Productos</h1>
-          <p className="mt-1 text-sm text-muted-foreground">{products.length} productos</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {total} producto{total === 1 ? "" : "s"}
+            {totalPages > 1 ? ` · página ${page} de ${totalPages}` : ""}
+          </p>
         </div>
         <Link
           href="/admin/productos/nuevo"
@@ -44,7 +66,7 @@ export default async function AdminProductsPage({
       </div>
 
       <form method="get" className="mb-6 flex flex-wrap gap-2">
-        <div className="relative flex-1 sm:max-w-md">
+        <div className="relative min-w-52 flex-1 sm:max-w-md">
           <input
             type="text"
             name="q"
@@ -56,6 +78,19 @@ export default async function AdminProductsPage({
             <Search className="h-4 w-4" />
           </button>
         </div>
+        <select
+          name="categoria"
+          defaultValue={sp.categoria ?? ""}
+          aria-label="Filtrar por categoría"
+          className="border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+        >
+          <option value="">Todas las categorías</option>
+          {CATEGORIES.map((c) => (
+            <option key={c.id} value={c.slug}>
+              {c.name}
+            </option>
+          ))}
+        </select>
         <button
           type="submit"
           name="oferta"
@@ -146,11 +181,7 @@ export default async function AdminProductsPage({
                         <Pencil className="h-4 w-4" />
                       </IconButton>
                     </Link>
-                    <form action={deleteProduct.bind(null, p.id)}>
-                      <IconButton type="submit" variant="destructive" aria-label={`Eliminar ${p.name}`}>
-                        <Trash2 className="h-4 w-4" />
-                      </IconButton>
-                    </form>
+                    <DeleteForm action={deleteProduct.bind(null, p.id)} label={p.name} />
                   </div>
                 </td>
               </tr>
@@ -169,6 +200,22 @@ export default async function AdminProductsPage({
           </div>
         )}
       </Card>
+
+      {totalPages > 1 && (
+        <div className="mt-6 flex items-center justify-center gap-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+            <Link
+              key={p}
+              href={hrefForPage(p)}
+              className={`flex h-9 w-9 items-center justify-center border text-sm font-semibold ${
+                p === page ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+              }`}
+            >
+              {p}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

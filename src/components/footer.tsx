@@ -3,6 +3,33 @@ import Link from 'next/link';
 import { categoriesWithCounts } from '@/data/catalog';
 import { serviceCategoriesWithCounts } from '@/data/services';
 
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7V11H8.3v3h2.4v7h2.8z" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
 const PRODUCT_LINKS = categoriesWithCounts()
   .filter((c) => c._count.products > 0)
   .map((c) => ({ label: c.name, href: `/productos?categoria=${c.slug}` }));
@@ -54,6 +81,32 @@ export function Footer({ settings }: { settings: SiteSettings }) {
             <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">
               {settings.footerDescription}
             </p>
+            {(settings.facebookUrl || settings.instagramUrl) && (
+              <div className="mt-4 flex items-center gap-2">
+                {settings.facebookUrl && (
+                  <a
+                    href={settings.facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="border p-2 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <FacebookIcon className="h-4 w-4" />
+                  </a>
+                )}
+                {settings.instagramUrl && (
+                  <a
+                    href={settings.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="border p-2 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <InstagramIcon className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           {COLUMNS.map((col) => (

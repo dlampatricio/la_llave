@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/card";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 import { cn, formatPrice } from "@/lib/utils";
 import { buildServiceWhatsAppMessage, whatsappLink } from "@/lib/quote";
 import type { ServiceCardData } from "@/lib/types";
@@ -63,16 +64,14 @@ export function ServiceCard({ service }: { service: ServiceCardData }) {
           )}
         </div>
 
-        <a
+        <WhatsAppLink
           href={whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
           className={cn(
             "inline-flex items-center justify-center gap-2 bg-primary px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110 active:brightness-95",
           )}
         >
           <MessageCircle className="h-3.5 w-3.5" /> Solicitar
-        </a>
+        </WhatsAppLink>
       </div>
     </div>
   );

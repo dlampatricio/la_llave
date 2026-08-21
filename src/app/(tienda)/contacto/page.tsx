@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { getSettings } from "@/lib/settings";
 import { whatsappLink } from "@/lib/quote";
 import { ContactForm } from "@/components/contact-form";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -15,15 +16,12 @@ export const metadata: Metadata = {
 
 const DEMO_NUMBER = "5363834798";
 
-const HOURS = [
-  { days: "Lunes – Viernes", hours: "7:30 am – 6:30 pm" },
-  { days: "Sábado", hours: "8:00 am – 2:00 pm" },
-  { days: "Domingo", hours: "Cerrado" },
-];
-
 export default async function ContactoPage() {
   const settings = await getSettings();
   const wa = settings.whatsappNumber || DEMO_NUMBER;
+  const hours = [settings.hoursWeekdays, settings.hoursSaturday, settings.hoursSunday].filter(
+    (h) => h.trim().length > 0,
+  );
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
@@ -47,10 +45,8 @@ export default async function ContactoPage() {
               <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                 Visítanos
               </div>
-              <div className="mt-1 text-sm font-semibold">
-                Av. del Herrerillo 1234, Col. Centro
-              </div>
-              <div className="text-sm text-muted-foreground">Ciudad, CP 44000</div>
+              <div className="mt-1 text-sm font-semibold">{settings.contactAddressLine1}</div>
+              <div className="text-sm text-muted-foreground">{settings.contactAddressLine2}</div>
             </div>
           </div>
 
@@ -62,15 +58,35 @@ export default async function ContactoPage() {
               <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                 WhatsApp
               </div>
-              <Link
+              <WhatsAppLink
                 href={whatsappLink(`Hola ${settings.storeName}, quiero hacer un pedido.`)}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:underline"
               >
                 {`+${wa.slice(0, 2)} ${wa.slice(2)}`} <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
+              </WhatsAppLink>
               <div className="text-sm text-muted-foreground">Respuesta en menos de 30 min</div>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4 border bg-card p-5 shadow-card">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center border-2 border-primary/20 bg-primary/10">
+              <Phone className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                Teléfono
+              </div>
+              {settings.contactPhone ? (
+                <a
+                  href={`tel:${settings.contactPhone.replace(/[^+\d]/g, "")}`}
+                  className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:underline"
+                >
+                  {settings.contactPhone} <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
+              ) : (
+                <div className="mt-1 text-sm font-semibold">Pídenoslo por WhatsApp</div>
+              )}
+              <div className="text-sm text-muted-foreground">Llámanos en horario de tienda</div>
             </div>
           </div>
 
@@ -83,10 +99,10 @@ export default async function ContactoPage() {
                 Correo
               </div>
               <Link
-                href="mailto:ventas@lallave.mx"
+                href={`mailto:${settings.contactEmail}`}
                 className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors hover:underline"
               >
-                ventas@lallave.mx <ArrowUpRight className="h-3.5 w-3.5" />
+                {settings.contactEmail} <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
               <div className="text-sm text-muted-foreground">Facturación y pedidos</div>
             </div>
@@ -101,10 +117,9 @@ export default async function ContactoPage() {
                 Horario
               </div>
               <ul className="mt-2 space-y-1.5">
-                {HOURS.map((h) => (
-                  <li key={h.days} className="flex items-baseline justify-between gap-4 text-sm">
-                    <span className="text-muted-foreground">{h.days}</span>
-                    <span className="font-semibold">{h.hours}</span>
+                {hours.map((h) => (
+                  <li key={h} className="text-sm">
+                    <span className="text-muted-foreground">{h}</span>
                   </li>
                 ))}
               </ul>

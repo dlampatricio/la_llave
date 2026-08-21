@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { whatsappLink } from "@/lib/quote";
+import { WhatsAppDialog } from "@/components/whatsapp-dialog";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/form";
 
@@ -10,11 +11,12 @@ export function ContactForm({ number, storeName }: { number: string; storeName: 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const lines = [`Hola ${storeName}, soy ${name}.`, `Mi teléfono es ${phone}.`, "", message];
-    window.open(whatsappLink(lines.join("\n"), number), "_blank", "noopener,noreferrer");
+    setPendingHref(whatsappLink(lines.join("\n"), number));
   }
 
   return (
@@ -60,6 +62,10 @@ export function ContactForm({ number, storeName }: { number: string; storeName: 
       <p className="text-xs text-muted-foreground">
         Al enviar se abrirá WhatsApp con tu mensaje listo. Respondemos en horario de tienda.
       </p>
+
+      {pendingHref && (
+        <WhatsAppDialog href={pendingHref} onClose={() => setPendingHref(null)} />
+      )}
     </form>
   );
 }

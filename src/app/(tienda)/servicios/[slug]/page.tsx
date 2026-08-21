@@ -8,6 +8,7 @@ import { buildServiceWhatsAppMessage, whatsappLink } from "@/lib/quote";
 import { ServiceCard } from "@/components/service-card";
 import { ProductGallery } from "@/components/product-gallery";
 import { SectionHeader } from "@/components/section-header";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 
 export const revalidate = 30;
 
@@ -82,14 +83,12 @@ export default async function ServiceDetailPage({
           )}
 
           <div className="mt-2">
-            <a
+            <WhatsAppLink
               href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center gap-2 bg-primary px-8 py-3 text-sm font-bold uppercase tracking-widest text-primary-foreground transition-all hover:brightness-110 active:brightness-95 sm:w-auto"
             >
               <MessageCircle className="h-4 w-4" /> Solicitar este servicio
-            </a>
+            </WhatsAppLink>
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
               Escríbenos por WhatsApp y con gusto te orientamos paso a paso.
             </p>
