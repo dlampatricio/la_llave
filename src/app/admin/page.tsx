@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, Package, PackagePlus, Percent, TriangleAlert } from "lucide-react";
+import { ArrowRight, Package, PackagePlus, Percent, Wrench } from "lucide-react";
 import { CATEGORIES, PRODUCTS } from "@/data/catalog";
+import { SERVICES } from "@/data/services";
 import { Card } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ export default function AdminDashboard() {
     { label: "Productos totales", value: PRODUCTS.length, href: "/admin/productos", icon: Package },
     { label: "Activos en la web", value: active.length, href: "/admin/productos", icon: PackagePlus },
     { label: "En oferta", value: PRODUCTS.filter((p) => p.onSale).length, href: "/admin/productos?oferta=1", icon: Percent },
-    { label: "Stock bajo (≤5)", value: active.filter((p) => p.stock <= 5).length, href: "/admin/productos?stock=1", icon: TriangleAlert },
+    { label: "Servicios activos", value: SERVICES.filter((s) => s.active).length, href: "/admin/servicios", icon: Wrench },
   ];
 
   return (
@@ -59,6 +60,21 @@ export default function AdminDashboard() {
             className="mt-4 inline-flex items-center gap-1 text-sm font-semibold uppercase tracking-widest text-primary hover:underline"
           >
             Ir a categorías <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Card>
+        <Card className="p-5">
+          <h2 className="font-display mb-2 text-2xl font-extrabold uppercase tracking-tight">
+            Servicios
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Administra los servicios que ofreces (reparaciones, montajes, instalaciones) y sus
+            categorías.
+          </p>
+          <Link
+            href="/admin/servicios"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold uppercase tracking-widest text-primary hover:underline"
+          >
+            Ir a servicios <ArrowRight className="h-4 w-4" />
           </Link>
         </Card>
         <Card className="p-5">

@@ -1,15 +1,24 @@
 import type { SiteSettings } from '@/lib/settings';
 import Link from 'next/link';
 import { categoriesWithCounts } from '@/data/catalog';
+import { serviceCategoriesWithCounts } from '@/data/services';
 
 const PRODUCT_LINKS = categoriesWithCounts()
   .filter((c) => c._count.products > 0)
   .map((c) => ({ label: c.name, href: `/productos?categoria=${c.slug}` }));
 
+const SERVICE_LINKS = serviceCategoriesWithCounts()
+  .filter((c) => c._count.services > 0)
+  .map((c) => ({ label: c.name, href: `/servicios?categoria=${c.slug}` }));
+
 const COLUMNS = [
   {
     heading: 'Productos',
     links: PRODUCT_LINKS,
+  },
+  {
+    heading: 'Servicios',
+    links: SERVICE_LINKS,
   },
   {
     heading: 'Ayuda',
@@ -35,7 +44,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
   return (
     <footer className="border-t bg-card pb-8 pt-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="mb-12 grid grid-cols-2 gap-8 lg:grid-cols-4">
+        <div className="mb-12 grid grid-cols-2 gap-8 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-1">
             <div className="mb-4">
               <span className="font-display text-xl font-extrabold uppercase tracking-tight text-foreground">

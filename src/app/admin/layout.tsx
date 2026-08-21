@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { LayoutDashboard, Package, Settings, Tags } from "lucide-react";
+import { LayoutDashboard, Package, Settings, Tags, Wrench } from "lucide-react";
 
 const NAV = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Productos", href: "/admin/productos", icon: Package },
   { label: "Categorías", href: "/admin/categorias", icon: Tags },
+  { label: "Servicios", href: "/admin/servicios", icon: Wrench },
+  { label: "Categorías de Servicios", href: "/admin/servicios-categorias", icon: Tags },
   { label: "Contenido de la web", href: "/admin/configuracion", icon: Settings },
 ];
 

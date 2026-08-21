@@ -39,3 +39,36 @@ export function toProductCardData(product: {
     categoryName: product.category.name,
   };
 }
+
+export type ServiceCardData = {
+  id: string;
+  name: string;
+  slug: string;
+  priceFrom: number | null;
+  image: string | null;
+  badge: string | null;
+  categoryName: string;
+  description: string | null;
+};
+
+export function toServiceCardData(service: {
+  id: string;
+  name: string;
+  slug: string;
+  priceFrom: { toNumber: () => number } | number | null;
+  images: string[];
+  badge: string | null;
+  description: string | null;
+  category: { name: string };
+}): ServiceCardData {
+  return {
+    id: service.id,
+    name: service.name,
+    slug: service.slug,
+    priceFrom: service.priceFrom != null ? Number(service.priceFrom) : null,
+    image: service.images[0] ?? null,
+    badge: service.badge,
+    categoryName: service.category.name,
+    description: service.description,
+  };
+}

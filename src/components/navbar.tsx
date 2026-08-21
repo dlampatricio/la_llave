@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { label: "Productos", href: "/productos" },
+  { label: "Servicios", href: "/servicios" },
   { label: "Ofertas", href: "/productos?ofertas=1" },
   { label: "Contacto", href: "/contacto" },
 ];
@@ -234,6 +235,7 @@ function isLinkActive(href: string, pathname: string, searchParams: URLSearchPar
       pathname.startsWith("/productos/")
     );
   }
+  if (href === "/servicios") return pathname.startsWith("/servicios");
   if (href === "/contacto") return pathname.startsWith("/contacto");
   return pathname === href;
 }

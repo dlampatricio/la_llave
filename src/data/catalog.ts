@@ -84,6 +84,46 @@ export const CATEGORIES: MockCategory[] = [
       'https://images.unsplash.com/photo-1731694411560-050e5b91e943?w=400&h=300&fit=crop&auto=format',
     sortOrder: 7,
   },
+  {
+    id: 'cat-herramientas-joyeria',
+    name: 'Herramientas para Joyería',
+    slug: 'herramientas-joyeria',
+    imageUrl:
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=300&fit=crop&auto=format',
+    sortOrder: 8,
+  },
+  {
+    id: 'cat-materiales-construccion',
+    name: 'Materiales de Construcción',
+    slug: 'materiales-construccion',
+    imageUrl:
+      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=300&fit=crop&auto=format',
+    sortOrder: 9,
+  },
+  {
+    id: 'cat-refrigeracion',
+    name: 'Refrigeración y Repuestos',
+    slug: 'refrigeracion',
+    imageUrl:
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format',
+    sortOrder: 10,
+  },
+  {
+    id: 'cat-piezas-moto',
+    name: 'Piezas de Moto',
+    slug: 'piezas-moto',
+    imageUrl:
+      'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400&h=300&fit=crop&auto=format',
+    sortOrder: 11,
+  },
+  {
+    id: 'cat-paneles-solares',
+    name: 'Paneles Solares y Energía',
+    slug: 'paneles-solares',
+    imageUrl:
+      'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=300&fit=crop&auto=format',
+    sortOrder: 12,
+  },
 ];
 
 const HERRAMIENTAS_ELECTRICAS = 'cat-herramientas-electricas';
@@ -92,6 +132,11 @@ const PLOMERIA = 'cat-plomeria';
 const ELECTRICIDAD = 'cat-electricidad';
 const PINTURAS = 'cat-pinturas';
 const SEGURIDAD = 'cat-seguridad';
+const HERRAMIENTAS_JOYERIA = 'cat-herramientas-joyeria';
+const MATERIALES_CONSTRUCCION = 'cat-materiales-construccion';
+const REFRIGERACION = 'cat-refrigeracion';
+const PIEZAS_MOTO = 'cat-piezas-moto';
+const PANELES_SOLARES = 'cat-paneles-solares';
 
 type ProductSeed = Omit<MockProduct, 'id' | 'slug' | 'category' | 'createdAt' | 'updatedAt'> & {
   categoryId: string;
@@ -286,6 +331,194 @@ const PRODUCT_SEEDS: ProductSeed[] = [
       'Casco de seguridad clase E con suspensión de 6 puntos y banda de sudor. Cumple norma ANSI Z89.1.',
     images: [
       'https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Juego de Pinzas para Joyería 5 pzas',
+    sku: 'JOY-PJ-5',
+    price: 32,
+    wasPrice: null,
+    stock: 22,
+    badge: 'NUEVO',
+    featured: true,
+    onSale: false,
+    rating: 4.7,
+    reviewsCount: 45,
+    active: true,
+    categoryId: HERRAMIENTAS_JOYERIA,
+    description:
+      'Juego de 5 pinzas profesionales para joyería y orfebrería: corte, punta fina, cadena y planas.\n\n• Acero inoxidable con punta endurecida\n• Mango ergonómico antideslizante\n• Estuche de tela incluido',
+    images: [
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Lupa de Joyero 10x con Luz LED',
+    sku: 'JOY-LJ-10',
+    price: 12,
+    wasPrice: 15,
+    stock: 34,
+    badge: 'OFERTA',
+    featured: false,
+    onSale: true,
+    rating: 4.6,
+    reviewsCount: 78,
+    active: true,
+    categoryId: HERRAMIENTAS_JOYERIA,
+    description:
+      'Lupa de joyero con aumento 10x y luz LED integrada para inspección de piedras y acabados.',
+    images: [
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Cemento Gris 42.5 kg',
+    sku: 'MC-CM-425',
+    price: 11.5,
+    wasPrice: null,
+    stock: 120,
+    badge: null,
+    featured: false,
+    onSale: false,
+    rating: 4.8,
+    reviewsCount: 340,
+    active: true,
+    categoryId: MATERIALES_CONSTRUCCION,
+    description:
+      'Cemento gris Portland de uso general, presentación de 42.5 kg. Ideal para fundiciones, pegas y repello.',
+    images: [
+      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Bloque de Concreto 15x20x40',
+    sku: 'MC-BL-1520',
+    price: 1.25,
+    wasPrice: null,
+    stock: 400,
+    badge: null,
+    featured: false,
+    onSale: false,
+    rating: 4.5,
+    reviewsCount: 96,
+    active: true,
+    categoryId: MATERIALES_CONSTRUCCION,
+    description: 'Bloque de concreto de 15x20x40 cm para muros y paredes. Venta por unidad.',
+    images: [
+      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Gas Refrigerante R-134a 340 g',
+    sku: 'RF-GS-134',
+    price: 18,
+    wasPrice: null,
+    stock: 25,
+    badge: null,
+    featured: false,
+    onSale: false,
+    rating: 4.9,
+    reviewsCount: 132,
+    active: true,
+    categoryId: REFRIGERACION,
+    description:
+      'Gas refrigerante R-134a en lata de 340 g para recarga de refrigeradoras y aires acondicionados.',
+    images: [
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Compresor Hermético 1/3 HP R134a',
+    sku: 'RF-CP-13',
+    price: 145,
+    wasPrice: 170,
+    stock: 6,
+    badge: 'OFERTA',
+    featured: true,
+    onSale: true,
+    rating: 4.7,
+    reviewsCount: 58,
+    active: true,
+    categoryId: REFRIGERACION,
+    description:
+      'Compresor hermético de 1/3 HP para refrigeradoras, compatible con refrigerante R-134a.\n\n• Voltaje: 115V / 60Hz\n• Incluye capacitor de arranque\n• Garantía de 90 días',
+    images: [
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Bujía NGK para Moto',
+    sku: 'MT-BJ-NGK',
+    price: 3.5,
+    wasPrice: null,
+    stock: 80,
+    badge: null,
+    featured: false,
+    onSale: false,
+    rating: 4.9,
+    reviewsCount: 210,
+    active: true,
+    categoryId: PIEZAS_MOTO,
+    description: 'Bujía NGK de combustión para motos y motorinas de 2 y 4 tiempos. Venta por unidad.',
+    images: [
+      'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Kit de Arrastre y Cadena 428',
+    sku: 'MT-KC-428',
+    price: 24,
+    wasPrice: null,
+    stock: 15,
+    badge: 'NUEVO',
+    featured: false,
+    onSale: false,
+    rating: 4.6,
+    reviewsCount: 74,
+    active: true,
+    categoryId: PIEZAS_MOTO,
+    description:
+      'Kit completo de arrastre para moto: piñón, corona y cadena 428. Compatible con la mayoría de motorinas 150cc.',
+    images: [
+      'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Panel Solar Monocristalino 450W',
+    sku: 'PS-PN-450',
+    price: 189,
+    wasPrice: null,
+    stock: 20,
+    badge: 'NUEVO',
+    featured: true,
+    onSale: false,
+    rating: 4.9,
+    reviewsCount: 41,
+    active: true,
+    categoryId: PANELES_SOLARES,
+    description:
+      'Panel solar monocristalino de 450W para sistemas residenciales y comerciales.\n\n• Eficiencia superior al 21%\n• Marco de aluminio resistente a corrosión\n• Garantía de 25 años',
+    images: [
+      'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=800&fit=crop&auto=format',
+    ],
+  },
+  {
+    name: 'Inversor Híbrido 3kW 48V',
+    sku: 'PS-IN-3K',
+    price: 320,
+    wasPrice: 360,
+    stock: 8,
+    badge: 'OFERTA',
+    featured: true,
+    onSale: true,
+    rating: 4.8,
+    reviewsCount: 33,
+    active: true,
+    categoryId: PANELES_SOLARES,
+    description:
+      'Inversor híbrido de 3kW a 48V con cargador solar integrado (MPPT). Ideal para hogares con paneles solares.',
+    images: [
+      'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=800&fit=crop&auto=format',
     ],
   },
 ];

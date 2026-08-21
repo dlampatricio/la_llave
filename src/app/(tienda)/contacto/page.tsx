@@ -32,8 +32,8 @@ export default async function ContactoPage() {
           Contacto
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          Pedidos, dudas sobre productos o precios: escríbenos por WhatsApp o visítanos en tienda.
-          Te atendemos en el horario de la ferretería.
+          Pedidos, dudas sobre productos, servicios o precios: escríbenos por WhatsApp o visítanos
+          en tienda. Te atendemos en el horario de la ferretería.
         </p>
       </div>
 

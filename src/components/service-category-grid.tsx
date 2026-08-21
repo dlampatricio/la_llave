@@ -2,23 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { SectionHeader } from "@/components/section-header";
 
-type Category = {
+type ServiceCategory = {
   name: string;
   slug: string;
   imageUrl: string | null;
-  _count: { products: number };
+  _count: { services: number };
 };
 
-export function CategoryGrid({ categories }: { categories: Category[] }) {
+export function ServiceCategoryGrid({ categories }: { categories: ServiceCategory[] }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-      <SectionHeader title="Productos por Categoría" href="/productos" linkLabel="Todas las categorías" />
+      <SectionHeader title="Servicios por Categoría" href="/servicios" linkLabel="Todos los servicios" />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {categories.map((cat) => (
           <Link
             key={cat.slug}
-            href={`/productos?categoria=${cat.slug}`}
+            href={`/servicios?categoria=${cat.slug}`}
             className="group relative block overflow-hidden bg-muted shadow-card transition-shadow hover:shadow-card-hover"
             style={{ aspectRatio: "4/3" }}
           >
@@ -40,7 +40,7 @@ export function CategoryGrid({ categories }: { categories: Category[] }) {
                 {cat.name}
               </div>
               <div className="mt-0.5 text-xs text-stone-200/90">
-                {cat._count.products} productos
+                {cat._count.services} servicio{cat._count.services === 1 ? "" : "s"}
               </div>
             </div>
           </Link>

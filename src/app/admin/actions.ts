@@ -62,3 +62,49 @@ export async function saveSiteSettings(_values: unknown) {
   revalidatePath("/", "layout");
   revalidatePath("/admin/configuracion");
 }
+
+type ServiceInput = {
+  name: string;
+  categoryId: string;
+  priceFrom?: number | null;
+  description?: string;
+  images?: string[];
+  featured?: boolean;
+  active?: boolean;
+  badge?: string;
+};
+
+export async function createService(_input: ServiceInput) {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}
+
+export async function updateService(_id: string, _input: ServiceInput) {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}
+
+export async function deleteService(_id: string) {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}
+
+export async function toggleService(_id: string, _field: "active" | "featured") {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}
+
+export async function createServiceCategory(_input: { name: string; imageUrl?: string }) {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}
+
+export async function updateServiceCategory(_id: string, _input: { name: string; imageUrl?: string }) {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}
+
+export async function deleteServiceCategory(_id: string) {
+  revalidatePath("/", "layout");
+  revalidatePath("/servicios", "layout");
+}

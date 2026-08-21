@@ -29,3 +29,16 @@ export function whatsappLink(message: string, number?: string) {
   const resolved = number ?? process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
   return `https://wa.me/${resolved ?? ""}?text=${encodeURIComponent(message)}`;
 }
+
+export function buildServiceWhatsAppMessage(
+  serviceName: string,
+  categoryName?: string,
+  storeName = "La Llave",
+) {
+  const lines = [
+    `Hola ${storeName}, me interesa el servicio de "${serviceName}".`,
+  ];
+  if (categoryName) lines.push(`Categoría: ${categoryName}`);
+  lines.push("¿Me pueden dar más información?");
+  return lines.join("\n");
+}
