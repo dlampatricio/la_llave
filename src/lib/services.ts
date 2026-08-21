@@ -4,6 +4,7 @@ import {
   serviceCategoriesWithCounts,
   type MockService,
 } from "@/data/services";
+import { normalizeText } from "@/lib/utils";
 
 export type ServiceWithCategory = MockService;
 
@@ -28,12 +29,12 @@ export async function getServices(params: {
   let filtered = SERVICES.filter((s) => s.active);
 
   if (q) {
-    const needle = q.toLowerCase();
+    const needle = normalizeText(q);
     filtered = filtered.filter(
       (s) =>
-        s.name.toLowerCase().includes(needle) ||
-        s.category.name.toLowerCase().includes(needle) ||
-        (s.description ?? "").toLowerCase().includes(needle),
+        normalizeText(s.name).includes(needle) ||
+        normalizeText(s.category.name).includes(needle) ||
+        normalizeText(s.description ?? "").includes(needle),
     );
   }
   if (category) filtered = filtered.filter((s) => s.category.slug === category);

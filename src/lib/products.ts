@@ -1,4 +1,5 @@
 import { CATEGORIES, PRODUCTS, categoriesWithCounts, type MockProduct } from "@/data/catalog";
+import { normalizeText } from "@/lib/utils";
 
 export type ProductWithCategory = MockProduct;
 
@@ -25,12 +26,12 @@ export async function getProducts(params: {
   let filtered = PRODUCTS.filter((p) => p.active);
 
   if (q) {
-    const needle = q.toLowerCase();
+    const needle = normalizeText(q);
     filtered = filtered.filter(
       (p) =>
-        p.name.toLowerCase().includes(needle) ||
-        (p.sku ?? "").toLowerCase().includes(needle) ||
-        (p.description ?? "").toLowerCase().includes(needle),
+        normalizeText(p.name).includes(needle) ||
+        normalizeText(p.sku ?? "").includes(needle) ||
+        normalizeText(p.description ?? "").includes(needle),
     );
   }
   if (category) filtered = filtered.filter((p) => p.category.slug === category);

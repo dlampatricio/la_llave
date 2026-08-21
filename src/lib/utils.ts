@@ -14,11 +14,15 @@ export function formatPrice(value: number | string | null | undefined) {
   }).format(num);
 }
 
-export function slugify(text: string) {
+export function normalizeText(text: string) {
   return text
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+export function slugify(text: string) {
+  return normalizeText(text)
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
 }

@@ -64,7 +64,7 @@ export function Navbar({ storeName }: { storeName: string }) {
 
   function submitSearch(e: React.FormEvent) {
     e.preventDefault();
-    router.push(query.trim() ? `/productos?q=${encodeURIComponent(query.trim())}` : "/productos");
+    router.push(query.trim() ? `/buscar?q=${encodeURIComponent(query.trim())}` : "/productos");
     setMobileOpen(false);
   }
 
@@ -92,9 +92,9 @@ export function Navbar({ storeName }: { storeName: string }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Buscar herramientas, marcas, códigos…"
+                placeholder="Buscar productos y servicios…"
                 className="w-full border bg-muted py-2 pl-4 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring"
-                aria-label="Buscar productos"
+                aria-label="Buscar productos y servicios"
               />
               <button type="submit" aria-label="Buscar" className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground">
                 <Search className="h-4 w-4" />
@@ -154,9 +154,9 @@ export function Navbar({ storeName }: { storeName: string }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Buscar herramientas, marcas, códigos…"
+                placeholder="Buscar productos y servicios…"
                 className="w-full border bg-muted py-3 pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring"
-                aria-label="Buscar productos"
+                aria-label="Buscar productos y servicios"
                 autoFocus
               />
               <button type="submit" aria-label="Buscar" className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground">
