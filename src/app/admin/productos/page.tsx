@@ -2,7 +2,8 @@ import Link from "next/link";
 import { PackageOpen, PackagePlus, Pencil, Search, SearchX } from "lucide-react";
 import { CATEGORIES, PRODUCTS } from "@/data/catalog";
 import { formatPrice } from "@/lib/utils";
-import { buildPageHref, paginate } from "@/lib/admin-list";import { Badge, Card } from "@/components/ui/card";
+import { buildPageHref, offerNeedsFix, paginate } from "@/lib/admin-list";
+import { Badge, Card } from "@/components/ui/card";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Input, NativeSelect } from "@/components/ui/form";
 import { iconButtonVariants } from "@/components/ui/icon-button";
@@ -16,7 +17,17 @@ import { Thumb } from "@/components/admin/thumb";
 
 export const dynamic = "force-dynamic";
 
-type Search = { q?: string; oferta?: string; categoria?: string; pagina?: string };
+type Search = {
+  q?: string;
+  oferta?: string;
+  categoria?: string;
+  pagina?: string;
+  "sin-foto"?: string;
+  ocultos?: string;
+  "sin-descripcion"?: string;
+  "oferta-mala"?: string;
+  destacados?: string;
+};
 
 export default async function AdminProductsPage({
   searchParams,
@@ -26,6 +37,11 @@ export default async function AdminProductsPage({
   const sp = await searchParams;
 
   const filtered = PRODUCTS.filter((p) => {
+    if (sp["sin-foto"] === "1" && p.images.length > 0) return false;
+    if (sp.ocultos === "1" && p.active) return false;
+    if (sp["sin-descripcion"] === "1" && (p.description ?? "").trim() !== "") return false;
+    if (sp["oferta-mala"] === "1" && !offerNeedsFix(p)) return false;
+    if (sp.destacados === "1" && !(p.featured && p.active)) return false;
     if (sp.q) {
       const needle = sp.q.toLowerCase();
       if (!p.name.toLowerCase().includes(needle) && !(p.sku ?? "").toLowerCase().includes(needle)) {
@@ -38,10 +54,32 @@ export default async function AdminProductsPage({
   });
 
   const { items: products, total, totalPages, page } = paginate(filtered, Number(sp.pagina) || 1);
-  const hasFilters = Boolean(sp.q || sp.categoria || sp.oferta === "1");
+  const hasFilters = Boolean(
+    sp.q ||
+      sp.categoria ||
+      sp.oferta === "1" ||
+      sp["sin-foto"] === "1" ||
+      sp.ocultos === "1" ||
+      sp["sin-descripcion"] === "1" ||
+      sp["oferta-mala"] === "1" ||
+      sp.destacados === "1",
+  );
 
   function hrefForPage(p: number) {
-    return buildPageHref("/admin/productos", { q: sp.q, categoria: sp.categoria, oferta: sp.oferta }, p);
+    return buildPageHref(
+      "/admin/productos",
+      {
+        q: sp.q,
+        categoria: sp.categoria,
+        oferta: sp.oferta,
+        "sin-foto": sp["sin-foto"],
+        ocultos: sp.ocultos,
+        "sin-descripcion": sp["sin-descripcion"],
+        "oferta-mala": sp["oferta-mala"],
+        destacados: sp.destacados,
+      },
+      p,
+    );
   }
 
   return (

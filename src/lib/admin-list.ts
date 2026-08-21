@@ -1,5 +1,22 @@
 export const PAGE_SIZE = 10;
 
+/**
+ * Detecta ofertas inconsistentes que confunden al cliente:
+ * - en oferta sin precio de referencia (no se ve el descuento)
+ * - precio anterior puesto pero oferta apagada (tachado sin promo)
+ * - el "precio anterior" no es mayor al precio actual
+ */
+export function offerNeedsFix(product: {
+  onSale: boolean;
+  wasPrice: number | null;
+  price: number;
+}) {
+  if (product.onSale && product.wasPrice == null) return true;
+  if (!product.onSale && product.wasPrice != null) return true;
+  if (product.wasPrice != null && product.wasPrice <= product.price) return true;
+  return false;
+}
+
 export function paginate<T>(items: T[], requestedPage: number) {
   const total = items.length;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
