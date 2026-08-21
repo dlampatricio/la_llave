@@ -1,5 +1,6 @@
 import { getSettings } from "@/lib/settings";
 import { SettingsForm } from "@/components/admin/settings-form";
+import { PageHeader } from "@/components/admin/page-header";
 
 export const dynamic = "force-dynamic";
 
@@ -8,14 +9,10 @@ export default async function AdminSettingsPage() {
 
   return (
     <div className="max-w-5xl">
-      <div className="mb-8">
-        <h1 className="font-display text-4xl font-black uppercase tracking-tight">
-          Contenido de la web
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Todo lo que edites aquí se publica de inmediato en la página pública.
-        </p>
-      </div>
+      <PageHeader
+        title="Contenido de la web"
+        description="Todo lo que edites aquí se publica de inmediato en la página pública."
+      />
 
       <SettingsForm settings={settings} />
     </div>

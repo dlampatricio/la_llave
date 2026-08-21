@@ -7,7 +7,7 @@ const toneClasses: Record<BadgeTone, string> = {
   oferta: "bg-destructive text-destructive-foreground",
   nuevo: "bg-success text-success-foreground",
   destacado: "bg-primary text-primary-foreground",
-  neutral: "bg-primary/15 text-primary-foreground",
+  neutral: "bg-primary/15 text-foreground",
 };
 
 export function Badge({

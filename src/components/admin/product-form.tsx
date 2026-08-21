@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
-import { ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label, Select, Textarea } from "@/components/ui/form";
 import { createProduct, updateProduct } from "@/app/admin/actions";
+import { ImageManager } from "@/components/admin/image-manager";
 
 const productSchema = z.object({
   name: z.string().min(2, "El nombre es obligatorio (mínimo 2 caracteres)"),
@@ -35,14 +35,6 @@ type Props = {
 
 export function ProductForm({ categories, initial, initialImages = [] }: Props) {
   const [images, setImages] = useState<string[]>(initialImages);
-  const [imageUrl, setImageUrl] = useState("");
-
-  function addImageUrl() {
-    const url = imageUrl.trim();
-    if (!url || images.length >= 4) return;
-    setImages((prev) => [...prev, url]);
-    setImageUrl("");
-  }
 
   const {
     register,
@@ -178,49 +170,7 @@ export function ProductForm({ categories, initial, initialImages = [] }: Props) 
       </div>
 
       <div className="space-y-4">
-        <div className="border p-4">
-          <Label>Fotos del producto</Label>
-          <p className="mb-3 text-xs text-muted-foreground">
-            Agrega hasta 4 imágenes con su URL (por ahora; la subida de archivos llega con el backend).
-          </p>
-          {images.length < 4 && (
-            <div className="flex gap-2">
-              <Input
-                type="url"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="https://…/foto.jpg"
-                aria-label="URL de la imagen"
-              />
-              <Button type="button" variant="secondary" onClick={addImageUrl} disabled={!imageUrl.trim()}>
-                <ImagePlus className="h-4 w-4" /> Agregar
-              </Button>
-            </div>
-          )}
-
-          <div className="mt-4 space-y-3">
-            {images.map((img, idx) => (
-              <div key={img} className="flex items-center gap-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img} alt={`Foto ${idx + 1}`} className="h-14 w-14 border object-cover" />
-                <input
-                  type="text"
-                  value={img}
-                  readOnly
-                  className="flex-1 border bg-muted px-2 py-1.5 text-xs"
-                />
-                <button
-                  type="button"
-                  onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
-                  className="border p-1.5 text-destructive transition-colors hover:bg-destructive/10"
-                  aria-label={`Quitar foto ${idx + 1}`}
-                >
-                  <X className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ImageManager images={images} onChange={setImages} label="Fotos del producto" />
 
         <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Guardando…" : initial?.id ? "Guardar cambios" : "Crear producto"}

@@ -1,8 +1,10 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/data/catalog";
 import { getCategoryList } from "@/lib/products";
 import { ProductForm } from "@/components/admin/product-form";
+import { PageHeader } from "@/components/admin/page-header";
+
+export const dynamic = "force-dynamic";
 
 export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -12,15 +14,12 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
 
   return (
     <div className="max-w-5xl">
-      <div className="mb-8">
-        <Link href="/admin/productos" className="text-sm font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground">
-          ← Volver a productos
-        </Link>
-        <h1 className="font-display mt-2 text-4xl font-black uppercase tracking-tight">
-          Editar producto
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">{product.name}</p>
-      </div>
+      <PageHeader
+        title="Editar producto"
+        description={product.name}
+        backHref="/admin/productos"
+        backLabel="Volver a productos"
+      />
 
       <ProductForm
         categories={getCategoryList()}

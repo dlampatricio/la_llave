@@ -15,6 +15,24 @@ export function Textarea({ className, ...props }: React.TextareaHTMLAttributes<H
   return <textarea className={cn(fieldClasses, "min-h-[80px]", className)} {...props} />;
 }
 
+export function NativeSelect({
+  className,
+  children,
+  ...props
+}: React.SelectHTMLAttributes<HTMLSelectElement>) {
+  return (
+    <span className={cn("relative block", className)}>
+      <select className={cn(fieldClasses, "appearance-none pr-9")} {...props}>
+        {children}
+      </select>
+      <ChevronDown
+        aria-hidden="true"
+        className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+      />
+    </span>
+  );
+}
+
 export function Label({ className, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label

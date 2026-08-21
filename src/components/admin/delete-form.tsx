@@ -1,21 +1,62 @@
 "use client";
 
+import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { IconButton } from "@/components/ui/icon-button";
 
-export function DeleteForm({ action, label }: { action: () => Promise<void>; label: string }) {
+type DeleteFormProps = {
+  action: () => Promise<void>;
+  label: string;
+  entity?: string;
+};
+
+export function DeleteForm({ action, label, entity = "elemento" }: DeleteFormProps) {
+  const [confirming, setConfirming] = useState(false);
+  const [pending, setPending] = useState(false);
+
+  function close() {
+    if (!pending) setConfirming(false);
+  }
+
+  async function handleConfirm() {
+    setPending(true);
+    try {
+      await action();
+      setConfirming(false);
+    } finally {
+      setPending(false);
+    }
+  }
+
   return (
-    <form
-      action={action}
-      onSubmit={(e) => {
-        if (!window.confirm(`¿Seguro que quieres eliminar "${label}"? Esta acción no se puede deshacer.`)) {
-          e.preventDefault();
-        }
-      }}
-    >
-      <IconButton type="submit" variant="destructive" aria-label={`Eliminar ${label}`}>
+    <>
+      <IconButton
+        variant="destructive"
+        aria-label={`Eliminar ${label}`}
+        onClick={() => setConfirming(true)}
+      >
         <Trash2 className="h-4 w-4" />
       </IconButton>
-    </form>
+
+      <Dialog
+        open={confirming}
+        onClose={close}
+        title={`Eliminar ${entity}`}
+        description={`Vas a eliminar "${label}". Esta acción no se puede deshacer.`}
+        destructive
+        footer={
+          <>
+            <Button variant="ghost" onClick={close} disabled={pending}>
+              Cancelar
+            </Button>
+            <Button variant="destructive" onClick={handleConfirm} disabled={pending}>
+              {pending ? "Eliminando…" : "Sí, eliminar"}
+            </Button>
+          </>
+        }
+      />
+    </>
   );
 }

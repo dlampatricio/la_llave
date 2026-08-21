@@ -2,6 +2,8 @@
 
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 export function ToggleField({
   label,
@@ -15,7 +17,7 @@ export function ToggleField({
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
-  function handleClick() {
+  function handleToggle() {
     startTransition(async () => {
       await action();
       router.refresh();
@@ -23,15 +25,16 @@ export function ToggleField({
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      disabled={pending}
-      className={`border px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest transition-colors disabled:opacity-50 ${
-        checked ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"
-      }`}
-    >
-      {label}
-    </button>
+    <span className="inline-flex items-center gap-2">
+      <Switch checked={checked} onCheckedChange={handleToggle} disabled={pending} aria-label={label} />
+      <span
+        className={cn(
+          "text-[10px] font-bold uppercase tracking-widest",
+          checked ? "text-foreground" : "text-muted-foreground",
+        )}
+      >
+        {label}
+      </span>
+    </span>
   );
 }

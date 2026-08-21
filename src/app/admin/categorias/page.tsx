@@ -1,45 +1,66 @@
-import { Plus } from "lucide-react";
+import { Plus, Tags } from "lucide-react";
 import { CATEGORIES, PRODUCTS } from "@/data/catalog";
 import { Card } from "@/components/ui/card";
 import { createCategory, deleteCategory, updateCategory } from "@/app/admin/actions";
+import { PageHeader } from "@/components/admin/page-header";
+import { EmptyState } from "@/components/admin/empty-state";
 import { CategoryForm } from "@/components/admin/category-form";
 import { DeleteForm } from "@/components/admin/delete-form";
+
+export const dynamic = "force-dynamic";
 
 export default function AdminCategoriesPage() {
   return (
     <div className="max-w-3xl">
-      <div className="mb-8">
-        <h1 className="font-display text-4xl font-black uppercase tracking-tight">Categorías</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Organiza tu catálogo. Los productos se filtran por categoría en la web.
-        </p>
-      </div>
+      <PageHeader
+        title="Categorías"
+        description="Organiza tu catálogo. Los productos se filtran por categoría en la web."
+      />
 
-      <Card className="mb-6 p-5">
+      <Card className="mb-4 p-5">
         <h2 className="font-display mb-3 flex items-center gap-2 text-xl font-extrabold uppercase tracking-tight">
-          <Plus className="h-4 w-4 text-primary" /> Nueva categoría
+          <Plus className="h-4 w-4 text-primary" aria-hidden="true" /> Nueva categoría
         </h2>
         <CategoryForm action={createCategory} />
       </Card>
 
-      <ul className="divide-y border bg-card">
-        {CATEGORIES.map((cat) => (
-          <li key={cat.id} className="flex items-center gap-4 px-4 py-3">
-            <div className="min-w-0 flex-1">
-              <div className="font-semibold">{cat.name}</div>
-              <div className="text-xs text-muted-foreground">
-                /{cat.slug} · {PRODUCTS.filter((p) => p.category.id === cat.id).length} productos
-              </div>
-            </div>
-            <CategoryForm
-              action={updateCategory.bind(null, cat.id)}
-              initial={{ name: cat.name, imageUrl: cat.imageUrl ?? "" }}
-              compact
-            />
-            <DeleteForm action={deleteCategory.bind(null, cat.id)} label={cat.name} />
-          </li>
-        ))}
-      </ul>
+      <Card>
+        <div className="border-b px-5 py-3">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+            Categorías existentes ({CATEGORIES.length})
+          </h2>
+        </div>
+
+        {CATEGORIES.length === 0 ? (
+          <EmptyState
+            icon={Tags}
+            title="No hay categorías"
+            description="Crea la primera categoría para organizar tus productos."
+          />
+        ) : (
+          <ul className="divide-y">
+            {CATEGORIES.map((cat) => (
+              <li key={cat.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 sm:flex-nowrap">
+                <div className="min-w-0 flex-1">
+                  <div className="font-semibold">{cat.name}</div>
+                  <div className="text-xs text-muted-foreground">
+                    /{cat.slug} · {PRODUCTS.filter((p) => p.category.id === cat.id).length}{" "}
+                    producto{PRODUCTS.filter((p) => p.category.id === cat.id).length === 1 ? "" : "s"}
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <CategoryForm
+                    action={updateCategory.bind(null, cat.id)}
+                    initial={{ name: cat.name, imageUrl: cat.imageUrl ?? "" }}
+                    compact
+                  />
+                  <DeleteForm action={deleteCategory.bind(null, cat.id)} label={cat.name} entity="categoría" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
     </div>
   );
 }

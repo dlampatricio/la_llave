@@ -41,43 +41,28 @@ function isActive(href: string, pathname: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function AdminNav({ variant = "sidebar" }: { variant?: "sidebar" | "mobile" }) {
+export function AdminNav() {
   const pathname = usePathname();
 
-  if (variant === "mobile") {
-    const items = [DASHBOARD_ITEM, ...GROUPS.flatMap((g) => g.items)];
-    return (
-      <div className="flex items-center gap-1.5 overflow-x-auto px-3 pb-2">
-        {items.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "flex shrink-0 items-center gap-1.5 whitespace-nowrap border px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-colors",
-              isActive(item.href, pathname)
-                ? "border-primary bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:bg-muted",
-            )}
-          >
-            <item.icon className="h-3.5 w-3.5" /> {item.label}
-          </Link>
-        ))}
-      </div>
+  const linkClasses = (active: boolean) =>
+    cn(
+      "flex items-center gap-3 px-3 py-2.5 text-sm font-semibold uppercase tracking-wide transition-colors",
+      active
+        ? "bg-muted text-foreground shadow-[inset_2px_0_0_0_var(--primary)]"
+        : "text-muted-foreground hover:bg-muted hover:text-foreground",
     );
-  }
 
   return (
-    <nav>
+    <nav aria-label="Navegación del panel">
       <ul className="space-y-1">
         <li>
           <Link
             href={DASHBOARD_ITEM.href}
-            className={cn(
-              "flex items-center gap-3 rounded px-3 py-2.5 text-sm font-semibold uppercase tracking-wide transition-colors hover:bg-muted",
-              isActive(DASHBOARD_ITEM.href, pathname) && "bg-muted text-primary",
-            )}
+            aria-current={isActive(DASHBOARD_ITEM.href, pathname) ? "page" : undefined}
+            className={linkClasses(isActive(DASHBOARD_ITEM.href, pathname))}
           >
-            <DASHBOARD_ITEM.icon className="h-4 w-4" /> {DASHBOARD_ITEM.label}
+            <DASHBOARD_ITEM.icon className="h-4 w-4 shrink-0" aria-hidden="true" />{" "}
+            {DASHBOARD_ITEM.label}
           </Link>
         </li>
       </ul>
@@ -92,12 +77,10 @@ export function AdminNav({ variant = "sidebar" }: { variant?: "sidebar" | "mobil
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 rounded px-3 py-2.5 text-sm font-semibold uppercase tracking-wide transition-colors hover:bg-muted",
-                    isActive(item.href, pathname) && "bg-muted text-primary",
-                  )}
+                  aria-current={isActive(item.href, pathname) ? "page" : undefined}
+                  className={linkClasses(isActive(item.href, pathname))}
                 >
-                  <item.icon className="h-4 w-4" /> {item.label}
+                  <item.icon className="h-4 w-4 shrink-0" aria-hidden="true" /> {item.label}
                 </Link>
               </li>
             ))}
