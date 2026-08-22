@@ -9,27 +9,51 @@ import { formatPrice } from '@/lib/utils';
 import { Minus, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+const EXIT_ANIMATION_MS = 200;
 
 export function QuoteDrawer() {
   const { items, total, isOpen, closeQuote, removeItem, setQty, clearQuote } = useQuote();
+  const [phase, setPhase] = useState<'closed' | 'open' | 'closing'>('closed');
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    setPhase((prev) => (isOpen ? 'open' : prev === 'closed' ? 'closed' : 'closing'));
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (phase !== 'closing') return;
+    const timer = setTimeout(() => setPhase('closed'), EXIT_ANIMATION_MS);
+    return () => clearTimeout(timer);
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase === 'closed') return;
+    document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [phase]);
 
-  if (!isOpen) return null;
+  if (phase === 'closed') return null;
 
   const message = buildWhatsAppMessage(items, total);
   const link = whatsappLink(message);
 
   return (
     <div className="fixed inset-0 z-[60]">
-      <div className="absolute inset-0 bg-black/50" onClick={closeQuote} aria-hidden />
-      <aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l bg-card shadow-2xl">
+      <div
+        className={`absolute inset-0 bg-black/50 ${
+          phase === 'closing' ? 'animate-overlay-out' : 'animate-overlay-in'
+        }`}
+        onClick={closeQuote}
+        aria-hidden
+      />
+      <aside
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l bg-card shadow-2xl ${
+          phase === 'closing' ? 'animate-drawer-right-out' : 'animate-drawer-right-in'
+        }`}
+      >
         <div className="flex items-center justify-between border-b px-5 py-4">
           <h2 className="font-display text-2xl font-extrabold uppercase tracking-tight">
             Tu pedido

@@ -167,6 +167,45 @@
   animation: drawer-in 200ms ease-out;
 }
 
+@keyframes drawer-right-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.animate-drawer-right-in {
+  animation: drawer-right-in 250ms ease-out;
+}
+
+@keyframes drawer-right-out {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-drawer-right-out {
+  animation: drawer-right-out 200ms ease-in forwards;
+}
+
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-overlay-out {
+  animation: overlay-out 150ms ease-in forwards;
+}
+
 *::-webkit-scrollbar {
   width: 10px;
   height: 10px;
