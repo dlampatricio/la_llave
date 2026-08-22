@@ -1,29 +1,12 @@
 import { AdminNav } from '@/components/admin/admin-nav';
+import { AdminMobileHeader } from '@/components/admin/mobile-header';
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-import { MobileNav } from '@/components/admin/mobile-nav';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
-      <header className="sticky top-0 z-40 border-b bg-card lg:hidden">
-        <div className="flex items-center justify-between gap-3 px-4 py-3">
-          <div className="flex items-center gap-3">
-            <MobileNav />
-            <Link href="/admin" className="flex items-center gap-2.5">
-              <span className="font-display text-lg font-extrabold uppercase tracking-tight">
-                La Llave
-              </span>
-            </Link>
-          </div>
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
-          >
-            Ver tienda <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-          </Link>
-        </div>
-      </header>
+      <AdminMobileHeader />
 
       <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r bg-card lg:flex">
         <div className="flex items-center gap-2.5 border-b px-4 py-5">
