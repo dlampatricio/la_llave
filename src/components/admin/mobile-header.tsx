@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MobileNav } from "@/components/admin/mobile-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function AdminMobileHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,12 +33,15 @@ export function AdminMobileHeader() {
             </span>
           </Link>
         </div>
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
-        >
-          Ver tienda <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-        </Link>
+        <div className="flex shrink-0 items-center gap-1">
+          <ThemeToggle />
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
+          >
+            Ver tienda <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </header>
   );

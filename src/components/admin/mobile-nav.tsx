@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ExternalLink, Menu } from "lucide-react";
 import { Drawer } from "@/components/ui/drawer";
 import { AdminNav } from "@/components/admin/admin-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function MobileNav() {
   const pathname = usePathname();
@@ -40,7 +41,8 @@ export function MobileNav() {
 
       <Drawer open={open} onClose={() => setOpen(false)} title="Navegación">
         <AdminNav />
-        <div className="mt-5 space-y-2 border-t pt-3">
+        <div className="mt-5 space-y-2 pt-3">
+          <ThemeToggle withLabel />
           <Link
             href="/"
             className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"

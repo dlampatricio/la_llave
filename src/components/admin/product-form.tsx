@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FieldError, Input, Label, Select, Textarea } from "@/components/ui/form";
+import { Checkbox, FieldError, Input, Label, Select, Textarea } from "@/components/ui/form";
 import { createProduct, updateProduct } from "@/app/admin/actions";
 import { ImageManager } from "@/components/admin/image-manager";
 
@@ -117,7 +117,7 @@ export function ProductForm({ categories, initial, initialImages = [] }: Props) 
             <FieldError message={errors.price?.message} />
           </div>
           <div>
-            <Label htmlFor="wasPrice">Precio anterior (opcional)</Label>
+            <Label htmlFor="wasPrice">Precio anterior</Label>
             <Input id="wasPrice" type="number" step="0.01" min="0" {...register("wasPrice", { setValueAs: asNumber })} placeholder="59.99" />
             <FieldError message={errors.wasPrice?.message} />
           </div>
@@ -139,7 +139,7 @@ export function ProductForm({ categories, initial, initialImages = [] }: Props) 
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <Label htmlFor="badge">Etiqueta (opcional)</Label>
+            <Label htmlFor="badge">Etiqueta</Label>
             <Select id="badge" {...register("badge")}>
               <option value="">Sin etiqueta</option>
               <option value="OFERTA">OFERTA</option>
@@ -155,15 +155,15 @@ export function ProductForm({ categories, initial, initialImages = [] }: Props) 
 
         <div className="flex flex-wrap gap-6 border p-4">
           <label className="flex items-center gap-2 text-sm font-semibold">
-            <input type="checkbox" {...register("featured")} className="h-4 w-4 accent-primary" />
+            <Checkbox {...register("featured")} />
             Destacado en la portada
           </label>
           <label className="flex items-center gap-2 text-sm font-semibold">
-            <input type="checkbox" {...register("onSale")} className="h-4 w-4 accent-primary" />
+            <Checkbox {...register("onSale")} />
             En oferta
           </label>
           <label className="flex items-center gap-2 text-sm font-semibold">
-            <input type="checkbox" {...register("active")} className="h-4 w-4 accent-primary" />
+            <Checkbox {...register("active")} />
             Visible en la web
           </label>
         </div>

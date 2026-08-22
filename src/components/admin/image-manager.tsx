@@ -40,24 +40,29 @@ export function ImageManager({ images, onChange, max = 4, label }: ImageManagerP
       </p>
 
       {images.length < max && (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            addImageUrl();
-          }}
-          className="flex gap-2"
-        >
+        <div className="flex gap-2">
           <Input
             type="url"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addImageUrl();
+              }
+            }}
             placeholder="https://…/foto.jpg"
             aria-label="URL de la imagen"
           />
-          <Button type="submit" variant="secondary" disabled={!imageUrl.trim()}>
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={!imageUrl.trim()}
+            onClick={addImageUrl}
+          >
             <ImagePlus className="h-4 w-4" /> Agregar
           </Button>
-        </form>
+        </div>
       )}
 
       {images.length > 0 && (

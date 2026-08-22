@@ -190,7 +190,7 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
         </section>
       ))}
 
-      <div className="sticky bottom-4 flex items-center gap-3 border bg-card p-4 shadow-card-hover">
+      <div className="flex items-center gap-3 border bg-card p-4 shadow-card-hover">
         <Button type="submit" size="lg" disabled={isSubmitting}>
           {isSubmitting ? "Guardando…" : "Guardar cambios"}
         </Button>

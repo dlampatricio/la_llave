@@ -1,5 +1,6 @@
 import { AdminNav } from '@/components/admin/admin-nav';
 import { AdminMobileHeader } from '@/components/admin/mobile-header';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
@@ -25,6 +26,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         <div className="space-y-2 border-t p-3">
+          <ThemeToggle withLabel />
           <Link
             href="/"
             className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"

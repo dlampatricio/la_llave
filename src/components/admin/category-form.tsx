@@ -97,7 +97,7 @@ export function CategoryForm({ action, initial, compact }: Props) {
         <FieldError message={errors.name?.message} />
       </div>
       <div>
-        <Label htmlFor="cat-image">URL de imagen (opcional)</Label>
+        <Label htmlFor="cat-image">URL de imagen</Label>
         <Input id="cat-image" {...register("imageUrl")} placeholder="https://…" />
         <FieldError message={errors.imageUrl?.message} />
       </div>

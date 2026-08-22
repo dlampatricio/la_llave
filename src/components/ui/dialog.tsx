@@ -83,7 +83,7 @@ export function Dialog({
   return (
     <div className="fixed inset-0 z-[100] flex items-end justify-center p-4 sm:items-center">
       <div
-        className="absolute inset-0 animate-overlay-in bg-foreground/40 backdrop-blur-[2px]"
+        className="absolute inset-0 animate-overlay-in bg-black/50"
         onClick={onClose}
         aria-hidden="true"
       />

@@ -15,24 +15,6 @@ export function Textarea({ className, ...props }: React.TextareaHTMLAttributes<H
   return <textarea className={cn(fieldClasses, "min-h-[80px]", className)} {...props} />;
 }
 
-export function NativeSelect({
-  className,
-  children,
-  ...props
-}: React.SelectHTMLAttributes<HTMLSelectElement>) {
-  return (
-    <span className={cn("relative block", className)}>
-      <select className={cn(fieldClasses, "appearance-none pr-9")} {...props}>
-        {children}
-      </select>
-      <ChevronDown
-        aria-hidden="true"
-        className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-      />
-    </span>
-  );
-}
-
 export function Label({ className, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label
@@ -214,11 +196,17 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(function 
 
 export function Checkbox({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <input
-      type="checkbox"
-      className={cn("h-4 w-4 accent-primary", className)}
-      {...props}
-    />
+    <span className={cn("relative inline-flex h-4 w-4 shrink-0", className)}>
+      <input type="checkbox" className="peer sr-only" {...props} />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none block h-4 w-4 cursor-pointer border bg-background transition-colors peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:outline-2 peer-focus-visible:outline-offset-1 peer-focus-visible:outline-ring peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+      />
+      <Check
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 text-primary-foreground opacity-0 transition-opacity peer-checked:opacity-100"
+      />
+    </span>
   );
 }
 

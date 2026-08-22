@@ -76,7 +76,7 @@ export function Drawer({ open, onClose, title, children, footer, className }: Dr
   return createPortal(
     <div className="fixed inset-0 z-[100]">
       <div
-        className="absolute inset-0 animate-overlay-in bg-foreground/40 backdrop-blur-[2px]"
+        className="absolute inset-0 animate-overlay-in bg-black/50"
         onClick={onClose}
         aria-hidden="true"
       />
