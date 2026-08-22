@@ -8,6 +8,7 @@ import { buildWhatsAppMessage, whatsappLink } from '@/lib/quote';
 import { formatPrice } from '@/lib/utils';
 import { Minus, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 export function QuoteDrawer() {
@@ -44,9 +45,11 @@ export function QuoteDrawer() {
             <p className="text-xs text-muted-foreground">
               Agrega productos y envíanos tu pedido por WhatsApp.
             </p>
-            <Button variant="outline" size="sm" onClick={closeQuote}>
-              Ver productos
-            </Button>
+            <Link href="/productos" onClick={closeQuote}>
+              <Button variant="outline" size="sm">
+                Ver productos
+              </Button>
+            </Link>
           </div>
         ) : (
           <>

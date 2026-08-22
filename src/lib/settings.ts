@@ -40,17 +40,17 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     'Ahorra comprando en cantidad. Te ayudamos a armar tu pedido con los mejores precios y entrega a domicilio.',
   promoCta: 'Hacer pedido por WhatsApp',
   footerDescription:
-    'Te ayudamos a encontrar la herramienta correcta para cada trabajo. Calidad, buen precio y atención cercana.',
+    'Tu ferretería de confianza en el Centro: herramientas, plomería, electricidad y material de construcción con asesoría real. Arma tu pedido aquí y ciérralo por WhatsApp.',
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '',
   contactAddressLine1: 'Av. del Herrerillo 1234, Col. Centro',
   contactAddressLine2: 'Ciudad, CP 44000',
   contactEmail: 'ventas@lallave.mx',
-  contactPhone: '+53 5638 34798',
+  contactPhone: '+53 638 34798',
   hoursWeekdays: 'Lunes a Viernes · 7:30 am – 6:30 pm',
   hoursSaturday: 'Sábado · 8:00 am – 2:00 pm',
   hoursSunday: 'Domingo · Cerrado',
-  facebookUrl: '',
-  instagramUrl: '',
+  facebookUrl: 'facebook',
+  instagramUrl: 'ig',
 };
 
 export async function getSettings(): Promise<SiteSettings> {

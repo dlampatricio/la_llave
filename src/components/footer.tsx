@@ -50,8 +50,9 @@ const COLUMNS = [
   {
     heading: 'Ayuda',
     links: [
-      { label: 'Cómo hacer un pedido', href: '/contacto' },
-      { label: 'Pedidos por mayoreo', href: '/contacto' },
+      { label: 'Cómo hacer un pedido', href: '/ayuda#como-pedir' },
+      { label: 'Pedidos por mayoreo', href: '/ayuda#mayoreo' },
+      { label: 'Preguntas frecuentes', href: '/ayuda#faq' },
       { label: 'Ofertas de la semana', href: '/productos?ofertas=1' },
       { label: 'Nuevos productos', href: '/productos' },
     ],
@@ -59,10 +60,10 @@ const COLUMNS = [
   {
     heading: 'La Ferretería',
     links: [
-      { label: 'Sobre La Llave', href: '/contacto' },
+      { label: 'Sobre La Llave', href: '/nosotros' },
       { label: 'Contáctanos', href: '/contacto' },
-      { label: 'Aviso de privacidad', href: '/contacto' },
-      { label: 'Términos de venta', href: '/contacto' },
+      { label: 'Aviso de privacidad', href: '/aviso-de-privacidad' },
+      { label: 'Términos de venta', href: '/terminos-de-venta' },
     ],
   },
 ];
@@ -89,7 +90,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook"
-                    className="border p-2 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                    className="text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                   >
                     <FacebookIcon className="h-4 w-4" />
                   </a>
@@ -100,7 +101,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
-                    className="border p-2 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                    className="text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                   >
                     <InstagramIcon className="h-4 w-4" />
                   </a>
