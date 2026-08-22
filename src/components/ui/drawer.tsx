@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/components/ui/icon-button";
@@ -20,6 +21,9 @@ export function Drawer({ open, onClose, title, children, footer, className }: Dr
   const restoreFocusRef = React.useRef<HTMLElement | null>(null);
   const onCloseRef = React.useRef(onClose);
   onCloseRef.current = onClose;
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (!open) return;
@@ -67,9 +71,9 @@ export function Drawer({ open, onClose, title, children, footer, className }: Dr
     };
   }, [open]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[100]">
       <div
         className="absolute inset-0 animate-overlay-in bg-foreground/40 backdrop-blur-[2px]"
@@ -103,6 +107,7 @@ export function Drawer({ open, onClose, title, children, footer, className }: Dr
 
         {footer && <div className="border-t p-3">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
