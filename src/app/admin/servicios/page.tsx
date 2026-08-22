@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Pencil, Search, SearchX, Wrench, WrenchIcon } from "lucide-react";
+import { Suspense } from "react";
+import { Pencil, SearchX, Wrench, WrenchIcon } from "lucide-react";
 import { SERVICES, SERVICE_CATEGORIES } from "@/data/services";
 import { formatPrice } from "@/lib/utils";
 import { buildPageHref, paginate } from "@/lib/admin-list";
 import { Badge, Card } from "@/components/ui/card";
-import { Button, ButtonLink } from "@/components/ui/button";
-import { Input, NativeSelect } from "@/components/ui/form";
+import { ButtonLink } from "@/components/ui/button";
 import { iconButtonVariants } from "@/components/ui/icon-button";
 import { deleteService, toggleService } from "@/app/admin/actions";
 import { PageHeader } from "@/components/admin/page-header";
@@ -14,6 +14,7 @@ import { EmptyState } from "@/components/admin/empty-state";
 import { ToggleField } from "@/components/admin/toggle-field";
 import { DeleteForm } from "@/components/admin/delete-form";
 import { Thumb } from "@/components/admin/thumb";
+import { AdminListFilters } from "@/components/admin/list-filters";
 
 export const dynamic = "force-dynamic";
 
@@ -59,44 +60,14 @@ export default async function AdminServicesPage({
         }
       />
 
-      <form method="get" className="mb-6 grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] lg:max-w-3xl lg:grid-cols-[minmax(0,1fr)_auto_auto]">
-        <div className="relative">
-          <Search
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-            aria-hidden="true"
-          />
-          <Input
-            type="text"
-            name="q"
-            defaultValue={sp.q}
-            placeholder="Buscar por nombre o categoría…"
-            aria-label="Buscar servicios"
-            className="pl-9"
-          />
-        </div>
-        <NativeSelect
-          name="categoria"
-          defaultValue={sp.categoria ?? ""}
-          aria-label="Filtrar por categoría"
-          className="sm:w-48"
-        >
-          <option value="">Todas las categorías</option>
-          {SERVICE_CATEGORIES.map((c) => (
-            <option key={c.id} value={c.slug}>
-              {c.name}
-            </option>
-          ))}
-        </NativeSelect>
-        <Button
-          type="submit"
-          name="destacado"
-          value={sp.destacado === "1" ? "" : "1"}
-          variant={sp.destacado === "1" ? "primary" : "outline"}
-          size="md"
-        >
-          Destacados
-        </Button>
-      </form>
+      <Suspense fallback={null}>
+        <AdminListFilters
+          basePath="/admin/servicios"
+          categories={SERVICE_CATEGORIES}
+          searchPlaceholder="Buscar por nombre o categoría…"
+          searchAriaLabel="Buscar servicios"
+        />
+      </Suspense>
 
       {services.length === 0 ? (
         <Card>

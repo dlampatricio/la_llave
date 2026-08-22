@@ -1,13 +1,17 @@
-import { Plus, Tags } from "lucide-react";
-import { SERVICE_CATEGORIES, SERVICES } from "@/data/services";
-import { Card } from "@/components/ui/card";
-import { createServiceCategory, deleteServiceCategory, updateServiceCategory } from "@/app/admin/actions";
-import { PageHeader } from "@/components/admin/page-header";
-import { EmptyState } from "@/components/admin/empty-state";
-import { CategoryForm } from "@/components/admin/category-form";
-import { DeleteForm } from "@/components/admin/delete-form";
+import {
+  createServiceCategory,
+  deleteServiceCategory,
+  updateServiceCategory,
+} from '@/app/admin/actions';
+import { CategoryForm } from '@/components/admin/category-form';
+import { DeleteForm } from '@/components/admin/delete-form';
+import { EmptyState } from '@/components/admin/empty-state';
+import { PageHeader } from '@/components/admin/page-header';
+import { Card } from '@/components/ui/card';
+import { SERVICE_CATEGORIES, SERVICES } from '@/data/services';
+import { Tags } from 'lucide-react';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default function AdminServiceCategoriesPage() {
   return (
@@ -19,7 +23,7 @@ export default function AdminServiceCategoriesPage() {
 
       <Card className="mb-4 p-5">
         <h2 className="font-display mb-3 flex items-center gap-2 text-xl font-extrabold uppercase tracking-tight">
-          <Plus className="h-4 w-4 text-primary" aria-hidden="true" /> Nueva categoría
+          Nueva categoría
         </h2>
         <CategoryForm action={createServiceCategory} />
       </Card>
@@ -40,21 +44,28 @@ export default function AdminServiceCategoriesPage() {
         ) : (
           <ul className="divide-y">
             {SERVICE_CATEGORIES.map((cat) => (
-              <li key={cat.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 sm:flex-nowrap">
+              <li
+                key={cat.id}
+                className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 sm:flex-nowrap"
+              >
                 <div className="min-w-0 flex-1">
                   <div className="font-semibold">{cat.name}</div>
                   <div className="text-xs text-muted-foreground">
-                    /{cat.slug} · {SERVICES.filter((s) => s.category.id === cat.id).length}{" "}
-                    servicio{SERVICES.filter((s) => s.category.id === cat.id).length === 1 ? "" : "s"}
+                    /{cat.slug} · {SERVICES.filter((s) => s.category.id === cat.id).length} servicio
+                    {SERVICES.filter((s) => s.category.id === cat.id).length === 1 ? '' : 's'}
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-1.5">
                   <CategoryForm
                     action={updateServiceCategory.bind(null, cat.id)}
-                    initial={{ name: cat.name, imageUrl: cat.imageUrl ?? "" }}
+                    initial={{ name: cat.name, imageUrl: cat.imageUrl ?? '' }}
                     compact
                   />
-                  <DeleteForm action={deleteServiceCategory.bind(null, cat.id)} label={cat.name} entity="categoría" />
+                  <DeleteForm
+                    action={deleteServiceCategory.bind(null, cat.id)}
+                    label={cat.name}
+                    entity="categoría"
+                  />
                 </div>
               </li>
             ))}
